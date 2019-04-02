@@ -1,0 +1,4 @@
+
+body{background-color: #F2F2F2;}
+p.time{font: .8rem/3 '';text-align: center;}
+.messageItem{width: 95%;margin: auto;border: 1px solid #ccc;background-color: #fff;padding: .6rem .8rem;font: .9rem/1.5 '';border-radius: 5px;}

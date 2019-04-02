@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>评价</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/evaluate.css">
+  <style>
+
+    .section:not(:last-of-type){margin-bottom: 1rem;}
+    .titleBar{font: 1rem/2.2 '';background-color: #F2F2F2;color: #333;padding: 0 2.5%;margin-bottom: .8rem;}
+
+  </style>
+</head>
+<body>
+<div class="header clf">
+  <a href="javascript:history.back(-1)" class="fl">评价</a>
+</div>
+<div class="section">
+  <div class="titleBar">专责评价</div>
+  <textarea placeholder="" class="evaluate">lkfdjgkldfgkljdfgh</textarea>
+  <div class="row">
+    <span class="fl">维修情况</span>
+    <div class="stars" id="star1-1"><i class="red"></i><i class="red"></i><i class="red"></i><i class="red"></i><i class="red"></i>
+    </div>
+  </div>
+  <div class="row">
+    <span class="fl">专业程度</span>
+    <div class="stars" id="star1-2"><i class="red"></i><i class="red"></i><i class="red"></i><i class="red"></i><i></i></div>
+  </div>
+  <div class="row">
+    <span class="fl">维修速度</span>
+    <div class="stars" id="star1-3"><i class="red"></i><i class="red"></i><i class="red"></i><i class="red"></i><i></i></div>
+  </div>
+</div>
+<div class="section">
+  <div class="titleBar">班组评价</div>
+  <textarea placeholder="" class="evaluate">lkfdjgkldfgkljdfgh</textarea>
+  <div class="row">
+    <span class="fl">维修情况</span>
+    <div class="stars" id="star2-1"><i class="red"></i><i class="red"></i><i class="red"></i><i class="red"></i><i class="red"></i>
+    </div>
+  </div>
+  <div class="row">
+    <span class="fl">专业程度</span>
+    <div class="stars" id="star2-2"><i class="red"></i><i class="red"></i><i class="red"></i><i class="red"></i><i></i></div>
+  </div>
+  <div class="row">
+    <span class="fl">维修速度</span>
+    <div class="stars" id="star2-3"><i class="red"></i><i class="red"></i><i class="red"></i><i class="red"></i><i class="red"></i></div>
+  </div>
+</div>
+<!--<button class="submit" onclick="submit()">提交评价</button>-->
+<script src="js/common.js"></script>
+<script src="js/jquery.min.js"></script>
+<script>
+
+  function submit() {
+    var user = JSON.parse(getCookie("userdata"));
+    var oneStar = $("#star1 > i.red").length;
+    var twoStar = $("#star2 > i.red").length;
+    var threeStar = $("#star3 > i.red").length;
+    var detail = $(".evaluate").val();
+    var params = {
+      dg_token: user.dg_token,
+      sheetCategory: '1',
+      sheetNo: getQueryString("sheetNo"),
+      personNo: user.personNo,
+      personName: user.personName,
+      detail: detail,
+      oneStar: "" + oneStar,
+      twoStar: "" + twoStar,
+      threeStar: "" + threeStar
+    };
+
+    $.get(getUrl("/addEvaluate", params), function (res, status) {
+      var data = JSON.parse(res);
+      console.log(data, data.status);
+      if (data.status === '1') {
+        location.href = "index.html"
+      } else if (data.status === '0') {
+        alert(data.message)
+      }
+    });
+  }
+
+/*
+  $(function () {
+    var start = $('.stars');
+    var startLength = start.length;
+    var startI = start.children();
+
+    start.on('click', 'i', function () {
+      var _this = $(this);
+      var _thisIndex = _this.index() + 1;
+      var _thisStart = $(this).parent();
+      var _thisStartI = $(this).parent().children();
+      _thisStartI.removeClass('red');
+      for (var curr = 0; curr < _thisIndex; curr++) {
+        $(_thisStartI[curr]).addClass('red');
+      }
+    })
+
+  })
+*/
+
+</script>
+
+</body>
+</html>

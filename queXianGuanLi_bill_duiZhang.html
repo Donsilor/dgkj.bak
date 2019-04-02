@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>缺陷管理</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/fuZeRenXunJan.css">
+  <style>
+    .nav > div {width: 33.33%;}
+    .content > div ul li .text {width: 100%;}
+    .content > div ul li .text p {width: 80%;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;}
+    .content > div ul li .text a {margin-top: -4rem;}
+  </style>
+</head>
+<body>
+<div class="clf header">
+  <a href="index.html" class="fl">缺陷管理</a>
+  <a href="queXianGuanLi_bill_duiZhang_sendOrder.html" class="fr"></a>
+</div>
+
+<div class="clf nav" id="nav">
+  <div class="fl current"><span>缺陷单</span></div>
+  <div class="fl"><span>已完成</span></div>
+  <div class="fl"><span>已派发</span></div>
+</div>
+<div class="content" id="box">
+  <div>
+    <ul id="list-defectSheet">
+      <!--
+      <li>
+        <div class="fl text">
+          <p>缺陷类型：<span>紧急缺陷</span></p>
+          <p>线路名称：<span>街道153线</span></p>
+          <p>线段名称：<span>担子变10千伏路东185线1#-22#杆</span></p>
+          <a href="queXianGuanLi_urgency.html" class="fr">处理</a>
+        </div>
+      </li>
+      -->
+    </ul>
+  </div>
+  <div style="display:none">
+    <ul id="list-complete">
+      <!--
+      <li>
+        <div class="fl text">
+          <p>缺陷类型：<span>紧急缺陷</span></p>
+          <p>线路名称：<span>街道153线</span></p>
+          <p>线段名称：<span>担子变10千伏路东185线1#-22#杆</span></p>
+          <a href="queXianGuanLi_urgency.html" class="fr">处理</a>
+        </div>
+      </li>
+      -->
+    </ul>
+  </div>
+  <div style="display:none">
+    <ul id="list-handout">
+      <!--
+      <li>
+        <div class="fl text">
+          <p>缺陷类型：<span>紧急缺陷</span></p>
+          <p>线路名称：<span>街道153线</span></p>
+          <p>线段名称：<span>担子变10千伏路东185线1#-22#杆</span></p>
+          <a href="queXianGuanLi_urgency.html" class="fr">处理</a>
+        </div>
+      </li>
+      -->
+    </ul>
+  </div>
+</div>
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script>
+  function getDefectList() {
+    var user = JSON.parse(getCookie("userdata"));
+    //userLogin, personNo, personName, dg_token, power
+    //var params = {"dg_token":"123","power":"0","personNo":"00000"}
+    var params = {"dg_token": user.dg_token, "personNo": user.personNo, "power": user.power};
+    //var params = {"dg_token":"123","power":"2","personNo":"00021"}
+    console.log('==============', params, user);
+    $.get(getUrl("/getDefectList", params), function (res, status) {
+      var data = JSON.parse(res);
+      console.log(data);
+      if (data.status === "0") {
+        alert("请求错误")
+      } else {
+        var d = data.data;
+        var defectSheetList = d.defectSheet;
+        var completeList = data.data.complete;
+        var handoutList = d.handout;
+
+        var ul = $("#list-defectSheet");
+        for (var i = 0; i < defectSheetList.length; i++) {
+          var d = defectSheetList[i];
+          ul.append("<li><div class=\"fl text\">" +
+            "<a href=\'javascript:void(0)\' onclick=\"goToSendOrder(\'" + d.sheetNo + "\')\"><p>缺陷类型：<span>" + (d.sheetName || "") + "</span></p></a>" +
+            "<a href=\'javascript:void(0)\' onclick=\"goToSendOrder(\'" + d.sheetNo + "\')\"><p>线路名称：<span>" + (d.lineName || "") + "</span></p></a>" +
+            "<a href=\'javascript:void(0)\' onclick=\"goToSendOrder(\'" + d.sheetNo + "\')\"><p>线段名称：<span>" + (d.lineAreaName || "") + "</span></p></a>" +
+            "<a href=\"javascript:goToSendOrder(\'" + d.sheetNo + "\')\" class=\"fr\">派单</a>" +
+            "</div></li>")
+        }
+
+        var ul2 = $("#list-complete");
+        for (var i = 0; i < completeList.length; i++) {
+          var d = completeList[i];
+          ul2.append("<li><div class=\"fl text\">" +
+            "<a href=\'javascript:void(0)\' onclick=\"goToComplete(\'" + d.sheetNo + "\')\"><p>缺陷类型：<span>" + (d.sheetName || "") + "</span></p></a>" +
+            "<a href=\'javascript:void(0)\' onclick=\"goToComplete(\'" + d.sheetNo + "\')\"><p>线路名称：<span>" + (d.lineName || "") + "</span></p></a>" +
+            "<a href=\'javascript:void(0)\' onclick=\"goToComplete(\'" + d.sheetNo + "\')\"><p>线段名称：<span>" + (d.lineAreaName || "") + "</span></p></a>" +
+            "<a href=\"javascript:void(0)\" onclick=\"goToTiJiaoPinJia(\'" + d.sheetNo + "\')\" class=\"fr\">评价</a>" +
+            "</div></li>")
+        }
+
+        var ul3 = $("#list-handout");
+        for (var i = 0; i < handoutList.length; i++) {
+          var d = handoutList[i];
+          ul3.append("<li><div class=\"fl text\">" +
+            "<a href=\'javascript:void(0)\' onclick=\"goToDispatch(\'" + d.sheetNo + "\')\"><p>缺陷类型：<span>" + (d.sheetName || "") + "</span></p></a>" +
+            "<a href=\'javascript:void(0)\' onclick=\"goToDispatch(\'" + d.sheetNo + "\')\"><p>线路名称：<span>" + (d.lineName || "") + "</span></p></a>" +
+            "<a href=\'javascript:void(0)\' onclick=\"goToDispatch(\'" + d.sheetNo + "\')\"><p>线段名称：<span>" + (d.lineAreaName || "") + "</span></p></a>" +
+            "<a href=\"javascript:void(0)\" onclick=\"goToDispatch(\'" + d.sheetNo + "\')\" class=\"fr\">查看</a>" +
+            "</div></li>")
+        }
+      }
+    });
+
+  }
+
+  getDefectList();
+
+  function goToSendOrder(sheetNo) {
+    console.log('==============', sheetNo);
+    location.href = "queXianGuanLi_bill_duiZhang_sendOrder.html?sheetNo=" + sheetNo;
+  }
+
+  function goToComplete(sheetNo) {
+    console.log('==============', sheetNo);
+    location.href = "queXianGuanLi_bill_duiZhang_complete.html?sheetNo=" + sheetNo;
+  }
+
+  function goToDispatch(sheetNo) {
+    console.log('==============', sheetNo);
+    location.href = "queXianGuanLi_bill_duiZhang_dispatch.html?sheetNo=" + sheetNo;
+  }
+
+  function goToTiJiaoPinJia(sheetNo) {
+    console.log('==============', sheetNo);
+    location.href = "pingJia.html?sheetNo=" + sheetNo;
+  }
+
+
+  function show(id1, id2) {
+    var nav = document.getElementById(id1);
+    var spans = nav.children;
+    var box = document.getElementById(id2);
+    var lis = box.children;
+    var a = spans[1].className;
+    for (var i = 0; i < spans.length; i++) {
+      spans[i].xuhao = i;
+      spans[i].onclick = function () {
+        for (var i = 0; i < spans.length; i++) {
+          spans[i].className = a;
+          lis[i].style.display = 'none';
+        }
+        this.className = a + ' ' + 'current';
+        lis[this.xuhao].style.display = 'block';
+      }
+    }
+
+  }
+
+  show('nav', 'box');
+
+
+</script>
+</body>
+</html>

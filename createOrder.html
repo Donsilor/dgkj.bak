@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>生成订单</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/createOrder.css">
+</head>
+<body>
+<div class="header clf">
+  <a href="javascript:history.back(-1)" class="fl">生成缺陷单</a>
+</div>
+<div class="section">
+  <div class="row">
+    <span class="fl">缺陷类型</span>
+    <a href="javascript:" class="text fr">紧急缺陷</a>
+  </div>
+  <div class="row">
+    <span class="fl">线路名称</span>
+    <span class="text fr">街道153线</span>
+  </div>
+  <div class="row">
+    <span class="fl">线段名称</span>
+    <span class="text fr">担子变10千伏路东185线1#-22#杆</span>
+  </div>
+  <div class="row">
+    <span class="fl">巡检情况</span>
+    <textarea title="">有部分线路断裂。</textarea>
+  </div>
+  <div class="row">
+    <span class="fl">上传附件</span>
+    <div class="uploadDiv clf">
+    <span>
+      <img src="images/uploadBtn.png" alt="" id="uploadBtn">
+      <input type="file" id="uploadInp">
+    </span>
+    </div>
+  </div>
+</div>
+<button class="submit" onclick="addDefect()">提交</button>
+
+<script src="js/common.js"></script>
+<script src="js/jquery.min.js"></script>
+<script>
+
+
+    function addDefect() {
+        const user = JSON.parse(getCookie("userdata"));
+        var params = {
+            "dg_token": user.dg_token,
+            "handOutPerson": '',
+            "uploadPerson":'',
+            "uploadType":0,
+            "sheetType":'',
+            "pSheetNo":'',
+            "lineNo":'',
+            "lineName":'',
+            "unitNo": '',
+            "unitName":'',
+            "sheetNo": getQueryString("sheetNo"),
+            "pSheetNo": "",
+            "checkResult": $("#checkResult").text(),
+            "pdDate":'',
+            "lineAreas": [{"lineAreaNo": '', "lineAreaName":''}],
+        };
+
+        $.get(getUrl("/addDefect", params), function (res, status) {
+            var data = JSON.parse(res);
+            if (data.status === "0") {
+                alert("请求错误")
+            } else {
+                alert("成功")
+            }
+        });
+    }
+
+  $(function () {
+    var uploadBtn = $('#uploadBtn');
+    var uploadInp = $('#uploadInp');
+    uploadBtn.on('click', function () {
+      uploadInp.click();
+    })
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+
+.signInDiv{border-top: .6rem solid #f2f2f2;border-bottom: .6rem solid #f2f2f2;padding: .8rem 2.5% .6rem;}
+.signInDiv > a.fl{width: 20%;text-align: center;font: .9rem/1.5 '';}
+.signInDiv > a.fl img{display: block;width: 3rem;margin: auto;}
+.signInDiv > .fr{width: 75%;font: .9rem/1.5 '';}
+.signInDiv > .fr p:first-of-type{margin-bottom: .3rem;}
+
+.timeDiv{width: 95%;margin: auto;}
+.timeDiv .week{border-bottom: .6rem solid #EFEFF4;}
+.timeDiv .week span{float: left;width: 14.285%;font: .9rem/2.5 '';text-align: center;background-color: #2987DE;color: #fff;}
+.timeDiv .date span{float: left;width: 14.285%;font: 1rem/3 '';text-align: center;background-color: #fafafa;color: #989898;}
+.timeDiv .date span.status1{background-color: #ccc;color: #fff;}
+.timeDiv .date span.status2{background-color: #fff;color: #000;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

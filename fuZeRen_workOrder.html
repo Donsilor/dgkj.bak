@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>负责人工单详情</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/fuZeRenGongDanXiangQing.css">
+</head>
+<body>
+<div class="clf header">
+  <a href="javascript:history.back(-1)" class="fl">我的工单</a>
+</div>
+<div class="content">
+  <ul>
+    <li><span class="fl">单位</span> <span class="fr" id="unitName"></span></li>
+    <li><span class="fl">编号</span> <span class="fr" id="sheetNo"></span></li>
+    <li><span class="fl">班组</span> <span class="fr" id="teamName"></span></li>
+    <li><span class="fl">计划开始时间</span> <span class="fr" id="startDate"></span></li>
+    <li><span class="fl">计划结束时间</span> <span class="fr" id="endDate"></span></li>
+    <li><span class="fl">所派人员</span> <span class="fr" id="personName"></span></li>
+    <li><span class="fl">协助人员</span> <span class="fr" id="assistName"></span></li>
+    <li><span class="fl">线路名称</span> <span class="fr" id="lineName"></span></li>
+    <li><span class="fl">线段名称</span> <span class="fr" id="lineAreaName"></span></li>
+    <li><span class="fl">任务</span></li>
+  </ul>
+  <textarea name="" id="" cols="30" rows="10" placeholder="请输入....." readonly id="task"></textarea>
+  <a href="fuZeRen_execute.html" class="btn">执行巡检</a>
+</div>
+
+
+</body>
+<script src="js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script>
+  function getWorksheetDetail() {
+    const user = JSON.parse(getCookie("userdata"));
+    //const params = {"dg_token":"123","power":"0","personNo":"00000"}
+    const params = {
+      "dg_token": user.dg_token,
+      "power": user.power,
+      "isTask": 0,
+      "sheetNo": getQueryString("sheetNo")
+    };
+
+    $.get(getUrl("/getWorksheetDetail", params), function (res, status) {
+      const data = JSON.parse(res);
+      if (data.status === "0") {
+        alert("请求错误")
+      } else {
+        const d = data.data;
+        console.log(d);
+        $("#unitName").text(d.unitName);
+        $("#sheetNo").text(d.sheetNo);
+        $("#teamName").text(d.teamName);
+        $("#personName").text(d.personName);
+        $("#startDate").text(d.startDate);
+        $("#endDate").text(d.endDate);
+        $("#lineName").text(d.lineName);
+        $("#lineAreaName").text(d.lineAreaName);
+        $("#task").text(d.task);
+
+        $(".btn").attr("href", "fuZeRen_execute.html?sheetNo=" + d.sheetNo)
+      }
+    });
+  }
+
+  getWorksheetDetail();
+</script>
+
+</html>

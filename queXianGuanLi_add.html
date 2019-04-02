@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>缺陷管理</title>
+  <link rel="stylesheet" href="css/mui.min.css">
+  <link rel="stylesheet" href="css/mui.picker.min.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/dispose.css">
+</head>
+<body>
+<div class="header clf">
+  <a href="javascript:history.back(-1)" class="fl">新增缺陷单</a>
+</div>
+<div>
+  <div class="section">
+    <div class="row">
+      <span class="fl">缺陷类型</span>
+      <a href="javascript:" id="selectDefectTypeBtn" class="fr"><span class="pleaseSelect">请选择</span></a>
+    </div>
+    <div class="row">
+      <span class="fl">线路名称</span>
+      <a href="javascript:" class="fr" id="selectCircuitBtn"><span class="pleaseSelect">请选择</span></a>
+    </div>
+    <div class="row">
+      <span class="fl">线段名称</span>
+      <a href="javascript:" class="fr" id="selectSegmentBtn"><span class="pleaseSelect">请选择</span></a>
+    </div>
+    <div class="row">
+      <span class="fl">巡检情况</span>
+      <textarea placeholder="请输入..."></textarea>
+    </div>
+    <div class="row">
+      <span class="fl">上传附件</span>
+      <div class="uploadDiv clf">
+      <span onclick="document.getElementById('uploadAccessory').click();">
+        <img src="images/uploadBtn.png" alt="">
+        <input type="file" id="uploadAccessory" style="display: none;">
+      </span>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="row">
+      <span class="fl"><b class="must">*</b> 所派班组</span>
+      <span id="selectTeamBtn" class="fr"><span class="pleaseSelect">请选择</span></span>
+    </div>
+    <div class="row">
+      <span class="fl"><b class="must">*</b> 计划开始时间</span>
+      <span data-options='{"type":"datetime"}' id="startTime" class="text fr btn"><span id="startTimeResult"><span class="pleaseSelect">请选择</span></span></span>
+    </div>
+    <div class="row">
+      <span class="fl"></span>
+      <span data-options='{"type":"datetime"}' id="endTime" class="text fr btn"><span id="endTimeResult"><span class="pleaseSelect">请选择</span></span></span>
+    </div>
+    <button class="submit">派发</button>
+  </div>
+</div>
+<div class="layer"></div>
+<div class="popup" id="selectDefectType">
+  <div class="topBar">选择缺陷类型</div>
+  <a href="javascript:" class="closeBtn"></a>
+  <div class="mainDiv">
+    <a href="javascript:" onclick="onSelectDefectType('一般缺陷')">一般缺陷</a>
+    <a href="javascript:" onclick="onSelectDefectType('紧急缺陷')">紧急缺陷</a>
+  </div>
+</div>
+<div class="popup" id="selectCircuit">
+  <div class="topBar">选择线路名称</div>
+  <a href="javascript:" class="closeBtn"></a>
+  <div class="mainDiv">
+    <a href="javascript:" onclick="onSelectCircuit('街道153线')">街道153线</a>
+    <a href="javascript:" onclick="onSelectCircuit('采石场153线')">采石场153线</a>
+    <a href="javascript:" onclick="onSelectCircuit('街道158线')">街道158线</a>
+  </div>
+</div>
+<div class="popup" id="selectSegment">
+  <div class="topBar">选择线段名称</div>
+  <a href="javascript:" class="closeBtn"></a>
+  <div class="mainDiv">
+    <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="街道153线主干#01-#07">街道153线主干#01-#07
+    </div>
+    <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="街道153线主干#36 街道支线#01-#16">街道153线主干#36
+      街道支线#01-#16
+    </div>
+    <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="街道支线#01 牌坊分支线#01-#20">街道支线#01
+      牌坊分支线#01-#20
+    </div>
+    <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="街道153线主干#46 南苑支线#01-#22">街道153线主干#46
+      南苑支线#01-#22
+    </div>
+    <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="南苑支线#01 高铁东苑分支线#01-#10">南苑支线#01
+      高铁东苑分支线#01-#10
+    </div>
+    <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="街道153线主干#61 #61支线#01-#43">街道153线主干#61
+      #61支线#01-#43
+    </div>
+  </div>
+</div>
+<div class="popup" id="selectTeam">
+  <div class="topBar">选择班组</div>
+  <a href="javascript:" class="closeBtn"></a>
+  <div class="mainDiv">
+    <a href="javascript:" onclick="onSelectTeam('配电一队')">配电一队</a>
+    <a href="javascript:" onclick="onSelectTeam('配电二队')">配电二队</a>
+    <a href="javascript:" onclick="onSelectTeam('配电三队')">配电三队</a>
+  </div>
+</div>
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/mui.picker.min.js"></script>
+<script>
+
+  function closePopup() {
+    $('.layer').hide();
+  }
+
+  function onSelectDefectType(lineName) {
+    $("#selectDefectTypeBtn").text(lineName);
+    $('#selectDefectType').hide();
+    closePopup();
+  }
+
+  function onSelectCircuit(lineName) {
+    $("#selectCircuitBtn").text(lineName);
+    $('#selectCircuit').hide();
+    closePopup();
+  }
+
+  function onSelectSegment() {
+    var ls = $("#selectSegment input:checked");
+    var lineAreaName = [];
+    for (var i = 0; i < ls.length; i++) {
+      lineAreaName.push(ls[i].value)
+    }
+
+    $("#selectSegmentBtn").text(lineAreaName.join("， "));
+    $('#selectSegment').hide();
+    closePopup();
+  }
+
+  function onSelectTeam(lineName) {
+    $("#selectTeamBtn").text(lineName);
+    $('#selectTeam').hide();
+    closePopup();
+  }
+
+  $(function () {
+
+    var uploadBtn = $('#uploadBtn');
+    var uploadInp = $('#uploadInp');
+    uploadBtn.on('click', function () {
+      uploadInp.click();
+    });
+
+    var layer = $('.layer');
+    var closeBtn = $('.closeBtn');
+
+    closeBtn.on('click', function () {
+      layer.hide();
+      $(this).parent('.popup').hide();
+    });
+
+    var selectDefectType = $('#selectDefectType');
+    var selectDefectTypeBtn = $('#selectDefectTypeBtn');
+    selectDefectTypeBtn.on('click', function () {
+      layer.show();
+      selectDefectType.show();
+    });
+
+    var selectCircuit = $('#selectCircuit');
+    var selectCircuitBtn = $('#selectCircuitBtn');
+    selectCircuitBtn.on('click', function () {
+      layer.show();
+      selectCircuit.show();
+    });
+
+    var selectSegment = $('#selectSegment');
+    var selectSegmentBtn = $('#selectSegmentBtn');
+    selectSegmentBtn.on('click', function () {
+      layer.show();
+      selectSegment.show();
+    });
+
+    var selectTeam = $('#selectTeam');
+    var selectTeamBtn = $('#selectTeamBtn');
+    selectTeamBtn.on('click', function () {
+      layer.show();
+      selectTeam.show();
+    });
+
+  });
+
+  (function (mui) {
+
+    mui.init();
+
+    var startTime = $('#startTime');
+    var startTimeResult = $('#startTimeResult')[0];
+    var endTime = $('#endTime');
+    var endTimeResult = $('#endTimeResult')[0];
+
+    /*选择日期函数开始执行*/
+    startTime.each(function (i, btn) {
+      btn.addEventListener('tap', function () {
+        var _self = this;
+        if (_self.picker) {
+          _self.picker.show(function (rs) {
+            startTimeResult.innerText = rs.text;
+            _self.picker.dispose();
+            _self.picker = null;
+          });
+        } else {
+          var optionsJson = this.getAttribute('data-options') || '{}';
+          var options = JSON.parse(optionsJson);
+          var id = this.getAttribute('id');
+          _self.picker = new mui.DtPicker(options);
+          _self.picker.show(function (rs) {
+            startTimeResult.innerText = rs.text;
+            _self.picker.dispose();
+            _self.picker = null;
+          });
+        }
+
+      }, false);
+    });
+
+    /*选择时间函数开始执行*/
+    endTime.each(function (i, btn) {
+      btn.addEventListener('tap', function () {
+        var _self = this;
+        if (_self.picker) {
+          _self.picker.show(function (rs) {
+            endTimeResult.innerText = '至 ' + rs.text;
+            _self.picker.dispose();
+            _self.picker = null;
+          });
+        } else {
+          var optionsJson = this.getAttribute('data-options') || '{}';
+          var options = JSON.parse(optionsJson);
+          var id = this.getAttribute('id');
+          _self.picker = new mui.DtPicker(options);
+          _self.picker.show(function (rs) {
+            endTimeResult.innerText = '至 ' + rs.text;
+            _self.picker.dispose();
+            _self.picker = null;
+          });
+        }
+      }, false);
+    });
+
+  })(mui);
+
+</script>
+</body>
+</html>

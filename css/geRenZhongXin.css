@@ -1,0 +1,49 @@
+
+body{padding-top: 0;}
+.top{width:100%;height:16rem;background:url(../images/photo_2.jpg)no-repeat center;padding-top:1rem;}
+.top .title{font-size:1.3rem;color:#fff;text-align:center;margin:1rem 0 3rem;}
+.top .img{width:5rem;height:5rem;margin:auto;border-radius:50%;overflow:hidden;}
+.top .img img{width:100%;height:100%;}
+.top .name{font-size:1.2rem;color:#fff;text-align:center;margin-top:1rem;}
+
+.content{width:100%;height:auto;padding-left:5%;}
+.content ul li{display: block;overflow:hidden;width:100%;height:auto;padding:1rem 3% 1rem 12%;border-bottom:1px solid #d6d6d6;}
+.content ul li a{display: block;}
+.content ul li a:before,
+.content ul li a:after{content:"";display:block;height:0;clear:both;visibility:hidden;}
+.content ul li .fl{font-size:1rem;color:#333;}
+.content ul li .fl{position:relative;}
+.content ul li .fl:before{content:'';display:block;width:1.5rem;height:1.5rem;position:absolute;}
+.content ul li .arrows{font-size: 1.2rem;font-family: 黑体;}
+.content ul li:nth-child(1) span:before{background:url(../images/icon_10.png)no-repeat center/95%;left:-2.3rem;top:-.3rem;}
+.content ul li:nth-child(2) span:before{background:url(../images/icon_11.png)no-repeat center/95%;left:-2.3rem;top:-.3rem;}
+.content ul li:nth-child(3) span:before{background:url(../images/icon_12.png)no-repeat center/95%;left:-2.3rem;top:-.3rem;}
+.content ul li:nth-child(4) span:before{background:url(../images/icon_13.png)no-repeat center/95%;left:-2.3rem;top:-.3rem;}
+.content ul li:nth-child(5) span:before{background:url(../images/icon_14.png)no-repeat center/95%;left:-2.3rem;top:-.3rem;}
+.content ul li:nth-child(6) span:before{background:url(../images/icon_15.png)no-repeat center/95%;left:-2.3rem;top:-.3rem;}
+
+.menu{position:fixed;left:0;bottom:0;width:100%;height:auto;padding:.5rem 0;border-top:1px solid #dbdbdb;}
+.menu > div{float:left;width:calc(100% / 3);text-align:center;}
+.menu > div .img{width:2rem;height:2rem;margin-bottom:.3rem;display:inline-block;}
+.menu > div .img img{width:100%;height:auto;}
+.menu > div .text{font-size:.9rem;color:#666;}
+
+
+
+#clearCache{width: 91.66%;border-radius: 0;}
+#clearCache .topBar{line-height: 2.5;text-align: left;padding: 0 2.5%;}
+#clearCache .mainDiv p{font: 1rem/1 '';padding: 1.2rem 2.5%;border-bottom: 1px solid #dedede;}
+#clearCache .mainDiv a{float: left;width: 50%;font: 1rem/3 '';text-align: center;}
+#clearCache .mainDiv a:not(:last-of-type){border-right: 1px solid #dedede;}
+
+#logOut{width: 91.66%;border-radius: 0;}
+#logOut .topBar{line-height: 2.5;text-align: left;padding: 0 2.5%;}
+#logOut .mainDiv p{font: 1rem/1 '';padding: 1.2rem 2.5%;border-bottom: 1px solid #dedede;}
+#logOut .mainDiv a{float: left;width: 50%;font: 1rem/3 '';text-align: center;}
+#logOut .mainDiv a:not(:last-of-type){border-right: 1px solid #dedede;}
+
+
+
+
+
+

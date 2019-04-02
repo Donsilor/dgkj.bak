@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>个人中心</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/index_iconfont.css">
+  <link rel="stylesheet" href="css/geRenZhongXin.css">
+</head>
+<body>
+<div class="top">
+  <div class="title">个人中心</div>
+  <div class="img"><img src="images/photo_3.jpg" alt=""></div>
+  <div class="name">阿里</div>
+</div>
+
+<div class="content">
+  <ul>
+    <li><span class="fl">姓名</span> <span class="fr">阿里</span></li>
+    <li><span class="fl">电话号码</span> <span class="fr">13915845698</span></li>
+    <li><span class="fl">工作偏好</span> <span class="fr">12356894565</span></li>
+    <li><a href="javascript:"><span class="fl">关于我们</span> <span class="fr arrows"> > </span></a></li>
+    <li id="clearCache-btn"><a href="javascript:"><span class="fl">清除缓存</span> <span class="fr arrows"> > </span></a></li>
+    <li id="logOut-btn"><a href="javascript:"><span class="fl">退出</span> <span class="fr arrows"> > </span></a></li>
+  </ul>
+</div>
+
+<div class="fixMenu">
+  <a href="index.html">
+    <i class="iconfont icon-shouye"></i>
+    <span>首页</span>
+  </a>
+  <a href="message.html">
+    <i class="iconfont icon-xiaoxi"></i>
+    <span>消息</span>
+  </a>
+  <a href="geRenZhongXin.html" class="current">
+    <i class="iconfont icon-gerenzhongxin"></i>
+    <span>个人中心</span>
+  </a>
+</div>
+
+<div class="layer"></div>
+<div class="popup" id="clearCache">
+  <div class="topBar">提示</div>
+  <div class="mainDiv">
+    <p>是否要清除缓存</p>
+    <a href="javascript:" class="confirm">确定</a>
+    <a href="javascript:" class="cancel">取消</a>
+  </div>
+</div>
+<div class="popup" id="logOut">
+  <div class="topBar">提示</div>
+  <div class="mainDiv">
+    <p>是否要退出</p>
+    <a href="javascript:" class="confirm" onclick="logout()">确定</a>
+    <a href="javascript:" class="cancel">取消</a>
+  </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script>
+  $(function () {
+    var user = JSON.parse(getCookie("userdata"));
+    if (user === undefined || user == null || user === "" || user.userLogin === "") {
+      location.href = "login.html"
+    }
+    console.log('============', user);
+    $("#userLogin").text(user.userLogin);
+
+
+
+    var layer = $('.layer');
+    var cancel = $('.popup .cancel');
+    var clearCache = $('#clearCache');
+    var clearCacheBtn = $('#clearCache-btn');
+    var logOut = $('#logOut');
+    var logOutBtn = $('#logOut-btn');
+    cancel.on('click', function () {
+      $(this).parent().parent('.popup').hide();
+      layer.hide();
+    });
+
+    clearCacheBtn.on('click', function () {
+      clearCache.show();
+      layer.show();
+    });
+
+    logOutBtn.on('click', function () {
+      logOut.show();
+      layer.show();
+    });
+
+
+  });
+
+  function logout() {
+    delCookie("userdata");
+    location.href = "index.html"
+  }
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

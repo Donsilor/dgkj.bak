@@ -1,0 +1,15 @@
+
+.row{width: 95%;padding: .3rem 0;margin: auto;line-height: 1.5rem;}
+.row:before,
+.row:after{content:"";display:block;height:0;clear:both;visibility:hidden;}
+
+.seeTheEvaluation{float: right;font: .9rem/2 '';color: #00BAFE;border-radius: 25px;padding: 0 1rem;margin-top: -2.6rem;border: 1px solid #8A8A8A;margin-right: 2.5%;}
+
+.evaluate{display: block;width: 95%;height: 6rem;margin: auto;border: none;background-color: #f2f2f2;border-radius: 5px;padding: .5rem;font-size: .9rem;font-family: 微软雅黑;}
+
+.row .stars{float: left;width: 60%;padding: .4rem 0;margin-left: 1.5rem;}
+.row .stars i{float: left;width: 1.2rem;height: 1.2rem;background: url("../images/star_gray.png") no-repeat center/contain;margin-right: .6rem;}
+.row .stars i.red{background: url("../images/star_red.png") no-repeat center/contain;}
+
+.submit{display: block;width: 95%;margin: 2rem auto 0;font: 1rem/2.5 '';border-radius: 3px;border: none;background-color: #00BAFE;color: #fff;text-align: center;}
+

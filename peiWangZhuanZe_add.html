@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>配网专责结果</title>
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/mui.picker.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/dispatch.css">
+</head>
+<body>
+<div class="header clf">
+    <a href="javascript:history.back(-1)" class="fl">返回</a>
+</div>
+<div>
+    <div class="row">
+        <i class="fl icon8"></i>
+        <span class="fl">单位</span>
+        <span id="unitName" class="text fr"><span class="pleaseSelect">请选择</span></span>
+    </div>
+    <!--
+        <div class="row">
+            <i class="fl icon9"></i>
+            <span class="fl">编号</span>
+            <span class="text fr" id="sheetNo"></span>
+        </div>
+    -->
+    <div class="row">
+        <i class="fl icon10"></i>
+        <span class="fl">班组</span>
+        <span id="teamName" class="text fr"><span class="pleaseSelect">请选择</span></span>
+    </div>
+    <div class="row">
+        <i class="fl icon11"></i>
+        <span class="fl">工单类型</span>
+        <span id="orderType" class="text fr"><span class="pleaseSelect">请选择</span></span>
+    </div>
+    <div class="row">
+        <i class="fl icon3"></i>
+        <span class="fl">计划开始时间</span>
+        <span data-options='{"type":"datetime"}' id="startTime" class="text fr btn"><span id="startTimeResult"><span
+                class="pleaseSelect">请选择</span></span></span>
+    </div>
+    <div class="row">
+        <i class="fl placeholder"></i>
+        <span class="fl">计划结束时间</span>
+        <span data-options='{"type":"datetime"}' id="endTime" class="text fr btn"><span id="endTimeResult"><span
+                class="pleaseSelect">请选择</span></span></span>
+    </div>
+    <!--
+      <div class="row">
+        <i class="fl icon1"></i>
+        <span class="fl">所派人员</span>
+        <span id="assignedPersonnel" class="fr"><span class="pleaseSelect">请选择</span></span>
+      </div>
+      <div class="row">
+        <i class="fl icon2"></i>
+        <span class="fl">协助人员</span>
+        <span id="assistPersonnel" class="fr"><span class="pleaseSelect">请选择</span></span>
+      </div>
+    -->
+    <div class="row">
+        <i class="fl icon4"></i>
+        <span class="fl">线路名称</span>
+        <a href="javascript:" id="selectCircuitBtn" class="fr"><span class="pleaseSelect">请选择</span></a>
+    </div>
+    <div class="row">
+        <i class="fl icon5"></i>
+        <span class="fl">线段名称</span>
+        <span id="lineAreaName"></span>
+        <a href="javascript:" id="selectSegmentBtn" class=" fr"><span class="pleaseSelect">请选择</span></a>
+    </div>
+    <div class="row">
+        <i class="fl icon6"></i>
+        <span class="fl">任务</span>
+        <div class="textarea">
+            <textarea title="" id="task">任务描述</textarea>
+            <a href="javascript:" class="voice"></a>
+        </div>
+    </div>
+</div>
+<button class="submit" id="submitBtn">派发</button>
+<div class="layer"></div>
+<div class="popup" id="confirm">
+    <div class="topBar">确定派发？</div>
+    <a href="javascript:" class="closeBtn"></a>
+    <div class="mainDiv">
+        <a href="javascript:">取消</a>
+        <a href="javascript:" onclick="submit()">确定</a>
+    </div>
+</div>
+<div class="popup" id="selectSegment">
+    <div class="topBar">选择线段名称</div>
+    <a href="javascript:" class="closeBtn"></a>
+    <div class="mainDiv">
+        <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="街道153线主干#01-#07">街道153线主干#01-#07
+        </div>
+        <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="街道153线主干#36 街道支线#01-#16">街道153线主干#36
+            街道支线#01-#16
+        </div>
+        <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="街道支线#01 牌坊分支线#01-#20">街道支线#01
+            牌坊分支线#01-#20
+        </div>
+        <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="街道153线主干#46 南苑支线#01-#22">街道153线主干#46
+            南苑支线#01-#22
+        </div>
+        <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="南苑支线#01 高铁东苑分支线#01-#10">南苑支线#01
+            高铁东苑分支线#01-#10
+        </div>
+        <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="街道153线主干#61 #61支线#01-#43">街道153线主干#61
+            #61支线#01-#43
+        </div>
+    </div>
+</div>
+<div class="popup" id="selectCircuit">
+    <div class="topBar">选择线路名称</div>
+    <a href="javascript:" class="closeBtn"></a>
+    <div class="mainDiv">
+        <a href="javascript:" onclick="onSelectCircuit('街道153线')">街道153线</a>
+        <a href="javascript:" onclick="onSelectCircuit('采石场153线')">采石场153线</a>
+        <a href="javascript:" onclick="onSelectCircuit('街道158线')">街道158线</a>
+    </div>
+</div>
+<div class="popup" id="selectUnit">
+    <div class="topBar">选择单位</div>
+    <a href="javascript:" class="closeBtn"></a>
+    <div class="mainDiv">
+        <a href="javascript:" onclick="onSelectUnit('滁州城郊县供电公司')">滁州城郊县供电公司</a>
+        <a href="javascript:" onclick="onSelectUnit('宿州城郊县供电公司')">宿州城郊县供电公司</a>
+        <a href="javascript:" onclick="onSelectUnit('池州城郊县供电公司')">池州城郊县供电公司</a>
+    </div>
+</div>
+<div class="popup" id="selectTeam">
+    <div class="topBar">选择班组</div>
+    <a href="javascript:" class="closeBtn"></a>
+    <div class="mainDiv">
+        <a href="javascript:" onclick="onSelectTeamName('配电一队')">配电一队</a>
+        <a href="javascript:" onclick="onSelectTeamName('配电二队')">配电二队</a>
+        <a href="javascript:" onclick="onSelectTeamName('配电三队')">配电三队</a>
+    </div>
+</div>
+<div class="popup" id="selectOrderType">
+    <div class="topBar">选择工单类型</div>
+    <a href="javascript:" class="closeBtn"></a>
+    <div class="mainDiv">
+        <a href="javascript:" onclick="onSelectOrderType('监察性巡视')">监察性巡视</a>
+        <a href="javascript:" onclick="onSelectOrderType('监察性巡视2')">监察性巡视2</a>
+        <a href="javascript:" onclick="onSelectOrderType('监察性巡视3')">监察性巡视3</a>
+    </div>
+</div>
+<div class="popup" id="selectAssignedPersonnel">
+    <div class="topBar">选择所派人员</div>
+    <a href="javascript:" class="closeBtn"></a>
+    <div class="mainDiv">
+        <a href="javascript:" onclick="onselectAssignedPersonnel('刘备')">刘备</a>
+        <a href="javascript:" onclick="onselectAssignedPersonnel('关羽')">关羽</a>
+        <a href="javascript:" onclick="onselectAssignedPersonnel('张飞')">张飞</a>
+    </div>
+</div>
+<div class="popup" id="selectAssistPersonnel">
+    <div class="topBar">选择协助人员</div>
+    <a href="javascript:" class="closeBtn"></a>
+    <div class="mainDiv">
+        <div><input type="checkbox" onchange="onSelectAssistPersonnel()" value="李玉">李玉</div>
+        <div><input type="checkbox" onchange="onSelectAssistPersonnel()" value="王刚">王刚</div>
+        <div><input type="checkbox" onchange="onSelectAssistPersonnel()" value="周州">周州</div>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/mui.picker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script>
+
+    function onSelectUnit(unitName) {
+        $("#unitName").text(unitName);
+        $('#selectUnit').hide();
+        closePopup();
+    }
+
+    function onSelectTeamName(teamName) {
+        $("#teamName").text(teamName);
+        $('#selectTeam').hide();
+        closePopup();
+    }
+
+    function onSelectOrderType(orderType) {
+        $("#orderType").text(orderType);
+        $('#selectOrderType').hide();
+        closePopup();
+    }
+
+    function onSelectAssistPersonnel() {
+        var ls = $("#selectAssistPersonnel input:checked");
+        var assistPersonnel = [];
+        for (var i = 0; i < ls.length; i++) {
+            assistPersonnel.push(ls[i].value)
+        }
+
+        $("#assistPersonnel").text(assistPersonnel.join("， "));
+        $('#selectAssistPersonnel').hide();
+        closePopup();
+    }
+
+    function onselectAssignedPersonnel(assignedPersonnel) {
+        $("#assignedPersonnel").text(assignedPersonnel);
+        $('#selectAssignedPersonnel').hide();
+        closePopup();
+    }
+
+    function onSelectCircuit(lineName) {
+        $("#selectCircuitBtn").text(lineName);
+        $('#selectCircuit').hide();
+        closePopup();
+    }
+
+    function onSelectSegment() {
+        var ls = $("input:checked");
+        var lineAreaName = [];
+        for (var i = 0; i < ls.length; i++) {
+            lineAreaName.push(ls[i].value)
+        }
+
+        $("#selectSegmentBtn").text(lineAreaName.join("， "));
+        $('#selectSegment').hide();
+        closePopup();
+    }
+
+    function closePopup() {
+        $('.layer').hide();
+    }
+
+    function submit() {
+        var user = JSON.parse(getCookie("userdata"));
+        var unitName = $("#unitName").text();
+        var sheetNo = $("#sheetNo").text();
+        var teamName = $("#teamName").text();
+        var sheetName = $("#orderType").text();
+        var startTime = $("#startTimeResult").text();
+        var endTime = $("#endTimeResult").text();
+        var assignedPersonnel = $("#assignedPersonnel").text();
+        var assistPersonnel = $("#assistPersonnel").text();
+        var lineName = $("#selectCircuitBtn").text();
+        var task = $("#task").val();
+
+        var ls = $("input:checked");
+        var lineAreaName = [];
+        for (var i = 0; i < ls.length; i++) {
+            lineAreaName.push(ls[i].value)
+        }
+
+        var params = {
+            dg_token: user.dg_token,
+            handOutPerson: user.personName,
+            power: user.power,
+            unitNo: "",
+            unitName: unitName,
+            sheetNo: sheetNo,
+            pSheetNo: "201806070005",
+            teamNo: "0001",
+            teamName: teamName,
+            sheetType: "0",
+            sheetName: sheetName,
+            startDate: startTime,
+            endDate: endTime,
+            personNo: "00021",
+            personName: assignedPersonnel,
+            lineName: lineName,
+            lineNo: "0001",
+            task: task,
+            lineAreas: [{"lineAreaNo": "0001", "lineAreaName": "线段1"}],
+            persons: [{"personName": "小明1", "personNo": "00021"}]
+        };
+
+        $.get(getUrl("/addWorksheet", params), function (res, status) {
+            var data = JSON.parse(res);
+            console.log(data);
+            if (data.status === '1') {
+                location.href = "index.html"
+            } else if (data.status === '0') {
+                alert(data.message)
+            }
+        });
+    }
+
+    $(function () {
+
+        $("#sheetNo").text(moment().format("YYYYMMDDHHmmss"));
+
+        var button = $('#submitBtn');
+        var closeBtn = $('.closeBtn');
+        var layer = $('.layer');
+        var confirmPopup = $('#confirm');
+        button.on('click', function () {
+            layer.show();
+            confirmPopup.show();
+        });
+        closeBtn.on('click', function () {
+            layer.hide();
+            $(this).parent('.popup').hide();
+        });
+
+        var selectSegment = $('#selectSegment');
+        var selectSegmentBtn = $('#selectSegmentBtn');
+        selectSegmentBtn.on('click', function () {
+//      layer.show();
+//      selectSegment.show();
+        });
+
+        var selectCircuit = $('#selectCircuit');
+        var selectCircuitBtn = $('#selectCircuitBtn');
+        selectCircuitBtn.on('click', function () {
+            layer.show();
+            selectCircuit.show();
+        });
+
+        var unitName = $('#unitName');
+        var selectUnit = $('#selectUnit');
+        unitName.on('click', function () {
+            var user = JSON.parse(getCookie("userdata"));
+            var params = {
+                dg_token: user.dg_token,
+                method: 'unit'
+            }
+            $.get(getUrl("/getCommon", params), function (res) {
+                const data = JSON.parse(res);
+                console.log(data, status)
+                if (data.status === '1') {
+                    var content = ""
+                    const units = data.data.unit;
+                    console.log(units, units.length)
+                    for (var i = 0; i < units.length; i++) {
+                        const d = units[i];
+                        content += '<a href="javascript:" onclick="onSelectUnit(\'' + d.unitName + '\')">' + d.unitName + '</a>'
+                    }
+                    $("#selectUnit .mainDiv").html(content),
+                        layer.show();
+                    selectUnit.show();
+                } else if (data.status === '0') {
+                    alert(data.message)
+                }
+            });
+
+        });
+
+        var teamName = $('#teamName');
+        var selectTeam = $('#selectTeam');
+        teamName.on('click', function () {
+            var user = JSON.parse(getCookie("userdata"));
+            var params = {
+                dg_token: user.dg_token,
+                method: 'team'
+            }
+            $.get(getUrl("/getCommon", params), function (res) {
+                const data = JSON.parse(res);
+                console.log('==============', data)
+                console.log(data, status)
+                if (data.status === '1') {
+                    var content = ""
+                    const units = data.data.unit;
+                    console.log(units, units.length)
+                    for (var i = 0; i < units.length; i++) {
+                        const d = units[i];
+                        content += '<a href="javascript:" onclick="onSelectTeamName(\'' + d.unitName + '\')">' + d.unitName + '</a>'
+                    }
+                    $("#selectTeam .mainDiv").html(content),
+                        layer.show();
+                    selectUnit.show();
+                } else if (data.status === '0') {
+                    alert(data.message)
+                }
+            });
+        });
+
+        var orderType = $('#orderType');
+        var selectOrderType = $('#selectOrderType');
+        orderType.on('click', function () {
+            var user = JSON.parse(getCookie("userdata"));
+            var params = {
+                dg_token: user.dg_token,
+                method: 'selectOrderType'
+            }
+            $.get(getUrl("/getCommon", params), function (res) {
+                const data = JSON.parse(res);
+                console.log('==============', data)
+                console.log(data, status)
+                if (data.status === '1') {
+                    var content = ""
+                    const units = data.data.unit;
+                    console.log(units, units.length)
+                    for (var i = 0; i < units.length; i++) {
+                        const d = units[i];
+                        content += '<a href="javascript:" onclick="onSelectTeamName(\'' + d.unitName + '\')">' + d.unitName + '</a>'
+                    }
+                    $("#selectTeam .mainDiv").html(content),
+                        layer.show();
+                    selectUnit.show();
+                } else if (data.status === '0') {
+                    alert(data.message)
+                }
+            });
+        });
+
+        var assignedPersonnel = $('#assignedPersonnel');
+        var selectAssignedPersonnel = $('#selectAssignedPersonnel');
+        assignedPersonnel.on('click', function () {
+            layer.show();
+            selectAssignedPersonnel.show();
+        });
+
+        var assistPersonnel = $('#assistPersonnel');
+        var selectAssistPersonnel = $('#selectAssistPersonnel');
+        assistPersonnel.on('click', function () {
+            layer.show();
+            selectAssistPersonnel.show();
+        });
+
+    });
+
+    (function (mui) {
+
+        mui.init();
+
+        var startTime = $('#startTime');
+        var startTimeResult = $('#startTimeResult')[0];
+        var endTime = $('#endTime');
+        var endTimeResult = $('#endTimeResult')[0];
+
+        /*选择日期函数开始执行*/
+        startTime.each(function (i, btn) {
+            btn.addEventListener('tap', function () {
+                var _self = this;
+                if (_self.picker) {
+                    _self.picker.show(function (rs) {
+                        startTimeResult.innerText = rs.text;
+                        _self.picker.dispose();
+                        _self.picker = null;
+                    });
+                } else {
+                    var optionsJson = this.getAttribute('data-options') || '{}';
+                    var options = JSON.parse(optionsJson);
+                    var id = this.getAttribute('id');
+                    _self.picker = new mui.DtPicker(options);
+                    _self.picker.show(function (rs) {
+                        startTimeResult.innerText = rs.text;
+                        _self.picker.dispose();
+                        _self.picker = null;
+                    });
+                }
+
+            }, false);
+        });
+
+        /*选择时间函数开始执行*/
+        endTime.each(function (i, btn) {
+            btn.addEventListener('tap', function () {
+                var _self = this;
+                if (_self.picker) {
+                    _self.picker.show(function (rs) {
+                        endTimeResult.innerText = '至 ' + rs.text;
+                        _self.picker.dispose();
+                        _self.picker = null;
+                    });
+                } else {
+                    var optionsJson = this.getAttribute('data-options') || '{}';
+                    var options = JSON.parse(optionsJson);
+                    var id = this.getAttribute('id');
+                    _self.picker = new mui.DtPicker(options);
+                    _self.picker.show(function (rs) {
+                        endTimeResult.innerText = '至 ' + rs.text;
+                        _self.picker.dispose();
+                        _self.picker = null;
+                    });
+                }
+            }, false);
+        });
+
+    })(mui);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>首页</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/swiper.min.css">
+  <link rel="stylesheet" href="css/index_iconfont.css">
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<div class="swiper-container ind_banner">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">
+      <img src="images/banner1.png" alt="">
+    </div>
+    <div class="swiper-slide">
+      <img src="images/banner2.png" alt="">
+    </div>
+    <div class="swiper-slide">
+      <img src="images/banner3.png" alt="">
+    </div>
+  </div>
+  <div class="swiper-pagination"></div>
+</div>
+<div class="titleBar">工单管理</div>
+<div class="listsDiv">
+  <ul class="clf">
+    <li>
+      <a href="signIn.html">
+        <i class="icon icon_1"></i>
+        <span>我要签到</span>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" onclick="goToGongdan()">
+        <i class="icon icon_2"></i>
+        <span>工单管理</span>
+      </a>
+    </li>
+    <li style="display: none;">
+      <a href="javascript:">
+        <i class="icon icon_3"></i>
+        <span>日常计划</span>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:" onclick="goToQueXianGuanLi()">
+        <i class="icon icon_4"></i>
+        <span>缺陷管理</span>
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="titleBar">查询分析</div>
+<div class="listsDiv">
+  <ul class="clf">
+    <li>
+      <a href="caiJiGuanLi.html">
+        <i class="icon icon_5"></i>
+        <span>数据采集</span>
+      </a>
+    </li>
+    <li style="display:none;">
+      <a href="javascript:">
+        <i class="icon icon_6"></i>
+        <span>报表分析</span>
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="recentOrder">
+  <div class="title">近期工单</div>
+  <a href="javascript:" class="item">
+    <i class="icon">
+      <img src="images/icon_20.png" alt="">
+    </i>
+    <p class="title">张飞飞 配电一队街道153线路巡检</p>
+    <p class="time">2018-05-20 13:00</p>
+  </a>
+  <a href="javascript:" class="item">
+    <i class="icon">
+      <img src="images/icon_20.png" alt="">
+    </i>
+    <p class="title">张飞飞 配电一队街道153线路巡检</p>
+    <p class="time">2018-05-20 13:00</p>
+  </a>
+  <a href="javascript:" class="item">
+    <i class="icon">
+      <img src="images/icon_20.png" alt="">
+    </i>
+    <p class="title">张飞飞 配电一队街道153线路巡检</p>
+    <p class="time">2018-05-20 13:00</p>
+  </a>
+</div>
+<div class="fixMenu">
+  <a href="index.html" class="current">
+    <i class="iconfont icon-shouye"></i>
+    <span>首页</span>
+  </a>
+  <a href="message.html">
+    <i class="iconfont icon-xiaoxi"></i>
+    <span>消息</span>
+  </a>
+  <a href="geRenZhongXin.html">
+    <i class="iconfont icon-gerenzhongxin"></i>
+    <span>个人中心</span>
+  </a>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/swiper.min.js"></script>
+<script src="js/common.js"></script>
+<script>
+  $(function () {
+    var user = getCookie("userdata");
+    if (user === undefined || user == null || user === "" || user.userLogin === "") {
+      location.href = "login.html"
+    }
+  });
+
+  var user = JSON.parse(getCookie("userdata"));
+  console.log(user);
+
+  function goToGongdan() {
+    if (user.power === "0") {
+      location.href = "peiWangZhuanZe_bill.html"
+    }
+    if (user.power === "1") {
+      location.href = "peiDianDuiZhang_bill.html"
+    }
+    if (user.power === "2") {
+      location.href = "fuZeRen_bill.html"
+    }
+  }
+
+  function goToQueXianGuanLi() {
+    if (user.power === "0") {
+      location.href = "queXianGuanLi_bill_zhuanZe.html"
+    }
+    if (user.power === "1") {
+      location.href = "queXianGuanLi_bill_duiZhang.html"
+    }
+    if (user.power === "2") {
+      location.href = "queXianGuanLi_bill_fuZeRen.html"
+    }
+  }
+
+  $(function () {
+    var mySwiper = new Swiper ('.swiper-container', {
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination'
+      }
+    })
+  })
+
+</script>
+</body>
+</html>

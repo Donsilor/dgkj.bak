@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>负责人处理缺陷详情</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/dispose.css">
+</head>
+<body>
+<div class="header clf">
+  <a href="javascript:history.back(-1)" class="fl">缺陷单</a>
+</div>
+<div class="section">
+  <div class="row">
+    <span class="fl">缺陷类型</span>
+    <a href="javascript:" class="fr">紧急缺陷</a>
+  </div>
+  <div class="row">
+    <span class="fl">线路名称</span>
+    <span class="text fr">街道153线</span>
+  </div>
+  <div class="row">
+    <span class="fl">线段名称</span>
+    <span class="text fr">担子变10千伏路东185线1#-22#杆</span>
+  </div>
+  <div class="row">
+    <span class="fl">巡检情况</span>
+    <textarea title="">有部分线路断裂。</textarea>
+  </div>
+  <div class="row">
+    <span class="fl">附件</span>
+    <div class="uploadDiv clf">
+    <span>
+      <img src="images/uploadBtn.png" alt="">
+    </span>
+    </div>
+  </div>
+  <div class="row">
+    <span class="fl">所派处理人员</span>
+    <span class="text fr">张龙</span>
+  </div>
+  <div class="row">
+    <span class="fl">计划工作时间</span>
+    <span class="text fr">2018-04-08 09:00</span>
+  </div>
+  <div class="row">
+    <span class="text fr">至2018-04-08 18:00</span>
+  </div>
+</div>
+<div class="section">
+  <div class="row">
+    <span class="fl"><b class="must">*</b>现场维修人员</span>
+    <span class="fr">张龙、李三</span>
+  </div>
+  <div class="row">
+    <span class="fl"><b class="must">*</b>维修结果</span>
+    <textarea title="">有部分线路断裂。</textarea>
+  </div>
+  <div class="row">
+    <span class="fl">上传附件</span>
+    <div class="uploadDiv clf">
+    <span>
+      <img src="images/uploadBtn.png" alt="" id="uploadBtn">
+      <input type="file" id="uploadInp">
+    </span>
+    </div>
+  </div>
+</div>
+<button class="submit">提交</button>
+<script src="js/jquery.min.js"></script>
+<script>
+  $(function () {
+    var uploadBtn = $('#uploadBtn');
+    var uploadInp = $('#uploadInp');
+    uploadBtn.on('click', function () {
+      uploadInp.click();
+    })
+  })
+</script>
+</body>
+</html>

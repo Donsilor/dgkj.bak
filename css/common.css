@@ -1,0 +1,54 @@
+@charset "utf-8";
+/* 深圳市静江网络科技有限公司 */
+*,*:before,*:after {-webkit-box-sizing:border-box; box-sizing:border-box;margin:0; padding:0;}
+html{-ms-text-size-adjust:100%;-webkit-text-size-adjust: 100%;}
+body{position:relative; font:14px/1 "Microsoft YaHei", Helvetica, sans-serif;color:#333;background-color: #fff;width:100%;max-width:750px;margin:auto;padding-top: 3rem;}
+input{border:none;}
+input,select,option,textarea{outline: none;}
+input[type="button"],button,select{cursor: pointer;border: none;outline: none;}
+textarea{outline: none;}
+ul,li,h1,h2,h3,h4,h5,h6{list-style-type:none;}
+img{border:none;}
+a{text-decoration:none; color:#666;}
+a:hover{text-decoration:none;}
+.clf{zoom:1}
+.clf:before,.clf:after,.w:before,.w:after{content:"";display:block;height:0;clear:both;visibility:hidden;}
+.fl{float: left;}
+.fr{float: right;}
+.w{width: 100%;max-width:1200px;margin: auto;}
+/* 初始化样式结束 */
+
+.header{width:750px;max-width: 100%;height:auto;padding:1rem 3% 1rem;position: fixed;top: 0;
+    background: -webkit-linear-gradient(left,#4b8cf8,#3db8fe); /* Safari 5.1 - 6 */
+    background: -o-linear-gradient(right,#4b8cf8,#3db8fe); /* Opera 11.1 - 12*/
+    background: -moz-linear-gradient(right,#4b8cf8,#3db8fe); /* Firefox 3.6 - 15*/
+    background: linear-gradient(to right,#4b8cf8,#3db8fe); /* 标准的语法 */
+}
+.header .fl{font-size:1rem;color:#fff;padding-left:6%;position:relative;}
+.header .fl:before{content:'';display:block;width:1rem;height:1rem;background:url(../images/back.png)no-repeat center/contain;position:absolute;left:0;top:50%;transform:translateY(-50%);}
+.header .fr{width:1.2rem;height:1.2rem;background:url(../images/add.png)no-repeat center/cover;}
+.header .center{display: block;text-align: center;font-size:1rem;color:#fff;text-align: center;}
+
+
+.layer{position: fixed;top: 0;right: 0;bottom: 0;left: 0;background-color: rgba(0,0,0,.3);z-index: 999;display: none;}
+.popup{position: fixed;top: 50%;left: 50%;transform: translate(-50%,-50%);z-index: 1000;background-color: #fff;border-radius: 5px;display: none;}
+.popup .topBar{background-color: #00BAFE;color: #fff;font: 1rem/2.8 '';text-align: center;border-radius: 5px 5px 0 0;}
+.popup .closeBtn{position: absolute;top: .3rem;right: .3rem;width: 1.2rem;height: 1.2rem;background: url("../images/closeBtn.png") no-repeat center/contain;}
+
+
+.fixMenu{position: fixed;right: 0;bottom: 0;left: 0;border-top: 1px solid #dbdbdb;padding-top: .5rem;max-width: 720px;margin: auto;background-color: #fff;z-index: 999;}
+.fixMenu a{float: left;width: 20%;text-align: center;margin: 0 6.665%;}
+.fixMenu a.current{color: #00BAFE;}
+.fixMenu i{display: block;font-size: 1.6rem;}
+.fixMenu span{font: .9rem/1.5 '';}
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>配网专责结果</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/result.css">
+</head>
+<body>
+<div class="header clf">
+  <a href="javascript:history.back(-1)" class="fl">返回</a>
+</div>
+<div class="row">
+  <i class="fl icon1"></i>
+  <span class="fl">派单队长</span>
+  <span class="text fr">
+  <select>
+  <option value ="">请选择派单队长</option>
+  <option value ="张三">张三</option>
+  <option value ="李四">李四</option>
+  <option value ="王五">王五</option>
+  <option value ="赵六">赵六</option>
+  </select>
+  </span>
+</div>
+<div class="row">
+  <i class="fl icon3"></i>
+  <span class="fl">计划开始时间</span>
+  <span class="text fr"><input type="datetime" value="" placeholder="选择开始时间"></span>
+</div>
+<div class="row">
+  <i class="fl placeholder"></i>
+  <span class="fl">计划结束时间</span>
+  <span class="text fr"><input type="datetime" value="" placeholder="选择结束时间"></span>
+</div>
+<div class="row">
+  <i class="fl icon4"></i>
+  <span class="fl">线路名称</span>
+  <span class="text fr">
+  <select>
+  <option value ="">请选择路线</option>
+  <option value ="某街道001路线">某街道001路线</option>
+  <option value ="某街道002路线">某街道002路线</option>
+  <option value ="某街道003路线">某街道003路线</option>
+  <option value ="某街道004路线">某街道004路线</option>
+  </select>
+  </span>
+</div>
+<div class="row">
+  <i class="fl icon5"></i>
+  <span class="fl">任务</span>
+  <div class="textarea">
+    <textarea title="">备注任务描述</textarea>
+    <a href="javascript:" class="voice"></a>
+  </div>
+  <a href="javascript:" class="fr">确认派单</a>
+</div>
+<script src="js/jquery.min.js"></script>
+<script>
+  $(function () {
+    var uploadBtn = $('#uploadBtn');
+    var uploadInp = $('#uploadInp');
+    uploadBtn.on('click', function () {
+      uploadInp.click();
+    })
+  })
+</script>
+</body>
+</html>

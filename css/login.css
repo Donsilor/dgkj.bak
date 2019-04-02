@@ -1,0 +1,24 @@
+
+body{background-color: #f2f2f2;}
+
+.logo{display: block;width: 37.5%;margin: 5rem auto;}
+
+.inputDiv{width: 83.33%;margin: 0 auto 1rem;background-color: #fff;border-radius: 5px;border: 1px solid #dbdbdb;}
+.inputDiv div:not(:last-of-type){border-bottom: 1px solid #dbdbdb;}
+.inputDiv span.fl{font: .9rem/3.2 '';margin-left: 1rem;}
+.inputDiv input{float: left;width: 70%;height: 2.88rem;margin-left: .9rem;}
+
+.button{display: block;width: 83.33%;margin: auto;background-color: #65C5FF;color: #fff;font: .9rem/3 '';border-radius: 5px;text-align: center;}
+
+
+
+
+
+
+
+
+
+
+
+
+

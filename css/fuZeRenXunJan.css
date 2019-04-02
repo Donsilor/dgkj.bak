@@ -1,0 +1,53 @@
+.nav{width:100%;height:auto;border-bottom:1px solid #e9e9e9;}
+.nav > div{display:block;width:50%;text-align:center;cursor:pointer;padding:1.2rem 0;}
+.nav > div span{font-size:1rem;color:#666;border-bottom:3px solid transparent;font-weight:600;padding:0 8% 1rem 8%;}
+.nav > div.current span{color:#21c3fe;border-color:#21c3fe;}
+
+.content{width:100%;height:auto;background:#efefef;padding-bottom:.1rem;}
+.content > div ul li{overflow:hidden;padding:1rem 2% .8rem;background:#fff;margin-bottom:.3rem;}
+.content > div ul li .img{width:4rem;height:4rem;margin-right:.5rem;}
+.content > div ul li .img img{width:100%;height:100%;}
+.content > div ul li .text{width:80%;}
+.content > div ul li .text p{font-size:.9rem;color:#555;margin-bottom:.7rem;}
+.content > div ul li .text p span{color:#333;}
+.content > div ul li .text > a:last-of-type,
+.content > div ul li .text > span.btn{float: right;padding:.5rem 1.2rem;background:#2987de;border-radius:.2rem;color:#fff;font-size:1rem;margin-top:-3.5rem;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

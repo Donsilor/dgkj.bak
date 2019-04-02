@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+<img src="images/login_logo.png" alt="" class="logo">
+<div class="inputDiv">
+    <div class="clf">
+        <span class="fl">账号</span>
+        <input type="text" id="userLogin" value="dg001" placeholder="请输入手机号">
+    </div>
+    <div class="clf">
+        <span class="fl">密码</span>
+        <input type="password" id="userPwd" value="888888" placeholder="请输入密码">
+    </div>
+</div>
+
+<a href="javascript:void(0)" class="button" onclick="login()">登录</a>
+<script src="js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script>
+    function getEntity() {
+        return {
+            isLogin: 1,
+            userLogin: $("#userLogin").val(),
+            userPwd: $("#userPwd").val(),
+        }
+    }
+
+    function login() {
+        const params = getEntity();
+        $.get(getUrl("/login", params), function (res, status) {
+            const data = JSON.parse(res)
+            console.log(data.status == '1', data.status == '0', data.status)
+            if (data.status == '1') {
+                setCookie("userdata", JSON.stringify(data.data));
+                location.href = "index.html"
+            } else if (data.status == '0') {
+                alert(data.message)
+            }
+        });
+    }
+</script>
+</body>
+</html>

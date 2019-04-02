@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>任务单新增派工单</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/dispatch.css">
+</head>
+<body>
+<div class="header clf">
+  <a href="javascript:history.back(-1)" class="fl">查看</a>
+</div>
+<div class="section">
+  <div class="row">
+    <i class="fl icon8"></i>
+    <span class="fl">单位</span>
+    <span class="text fr" id="unitName">滁州城郊县供电公司</span>
+  </div>
+  <div class="row">
+    <i class="fl icon9"></i>
+    <span class="fl">编号</span>
+    <span class="text fr" id="sheetNo">2018057565</span>
+  </div>
+  <div class="row">
+    <i class="fl icon10"></i>
+    <span class="fl">班组</span>
+    <span class="text fr" id="teamName">配电一队</span>
+  </div>
+  <div class="row">
+    <i class="fl icon11"></i>
+    <span class="fl">工单类型</span>
+    <span class="text fr" id="sheetName"></span>
+  </div>
+  <div class="row">
+    <i class="fl icon3"></i>
+    <span class="fl">计划开始时间</span>
+    <span class="text fr" id="startDate">2018-05-08 09:00</span>
+  </div>
+  <div class="row">
+    <i class="fl placeholder"></i>
+    <span class="fl">计划结束时间</span>
+    <span class="text fr" id="endDate">至2018-05-18 18:00</span>
+  </div>
+  <div class="row">
+    <i class="fl icon4"></i>
+    <span class="fl">线路名称</span>
+    <span class="text fr" id="lineName">街道153线</span>
+  </div>
+  <div class="row">
+    <i class="fl icon5"></i>
+    <span class="fl">线段名称</span>
+    <a href="javascript:" class=" fr" id="lineAreaName"></a>
+  </div>
+  <div class="row">
+    <i class="fl icon6"></i>
+    <span class="fl">任务</span>
+    <div class="textarea">
+      <textarea title="" id="task">任务描述</textarea>
+    </div>
+  </div>
+</div>
+<!--<div class="titelBar"><span>结果</span></div>
+-->
+<div class="section">
+  <div class="links" id="tasks">
+    <!--<a href="javascript:">-->
+    <!--<span class="fl">张飞 街道153线</span>-->
+    <!--<span class="fr">没有问题</span>-->
+    <!--</a>-->
+  </div>
+</div>
+<!--<button class="submit">一键派发</button>-->
+</body>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script>
+  function getWorksheetDetail() {
+    const user = JSON.parse(getCookie("userdata"));
+    //const params = {"dg_token":"123","power":"0","personNo":"00000"}
+    const params = {
+      "dg_token": user.dg_token,
+      "power": user.power,
+      "isTask": 0,
+      "sheetNo": getQueryString("sheetNo")
+    };
+
+    $.get(getUrl("/getWorksheetDetail", params), function (res, status) {
+      const data = JSON.parse(res);
+      if (data.status === "0") {
+        alert("请求错误")
+      } else {
+        const d = data.data;
+        $("#unitName").text(d.unitName);
+        $("#sheetNo").text(d.sheetNo);
+        $("#teamName").text(d.teamName);
+        $("#sheetName").text(d.sheetName);
+        $("#startDate").text(d.startDate);
+        $("#endDate").text(d.endDate);
+        $("#lineName").text(d.lineName);
+        $("#lineAreaName").text(d.lineAreaName);
+        $("#task").text(d.task);
+        const lines = d.tasks || [];
+        for (let i = 0; i < lines.length; i++) {
+          const d = lines[i];
+          const statusRes = d.status === "0" ? "有缺陷" : d.status === "1" ? "已派发" : d.status === "2" ? "处理中" : d.status === "3" ? "已完成" : "";
+          $("#tasks").append("<a href=\"peiWangZhuanZe_result.html?isDefect=" + (d.status === "0" ? 1 : 0) + "&sheetNo=" + d.sheetNo + "\">" +
+            "<span class=\"fl\">" + d.personName + " " + d.lineName + "</span>" +
+            "<span class=\"fr\">" + statusRes + "</span>" +
+            "</a>")
+        }
+      }
+    });
+  }
+
+  getWorksheetDetail();
+</script>
+</html>

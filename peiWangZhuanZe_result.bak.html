@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>配网专责结果</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/result.css">
+</head>
+<body>
+<div class="header clf">
+    <a href="javascript:history.back(-1)" class="fl">返回</a>
+</div>
+<div class="row">
+    <i class="fl icon1"></i>
+    <span class="fl">所派人员</span>
+    <span class="text fr" id="personName"></span>
+</div>
+<div class="row">
+    <i class="fl icon2"></i>
+    <span class="fl">协助人员</span>
+    <span class="text fr" id="personHelp"></span>
+</div>
+<div class="row">
+    <i class="fl icon3"></i>
+    <span class="fl">计划开始时间</span>
+    <span class="text fr" id="startDate"></span>
+</div>
+<div class="row">
+    <i class="fl placeholder"></i>
+    <span class="fl">计划结束时间</span>
+    <span class="text fr" id="endDate"></span>
+</div>
+<div class="row">
+    <i class="fl icon4"></i>
+    <span class="fl">线路名称</span>
+    <span class="text fr" id="lineName"></span>
+</div>
+<div class="row">
+    <i class="fl icon4"></i>
+    <span class="fl">线段名称</span>
+    <a href="javascript:" class=" fr" id>选择线段名称</a>
+</div>
+<div class="row">
+    <i class="fl icon5"></i>
+    <span class="fl">任务</span>
+    <div class="textarea">
+        <textarea title="">任务描述</textarea>
+        <a href="javascript:" class="voice"></a>
+    </div>
+</div>
+<div class="titelBar"><span>缺陷单</span></div>
+<div class="row">
+    <span class="fl">缺陷类型</span>
+    <a href="javascript:" class="text fr" id="sheetName"></a>
+</div>
+<div class="row">
+    <span class="fl">线路名称</span>
+    <span class="text fr" id="lineName2"></span>
+</div>
+<div class="row">
+    <span class="fl">线段名称</span>
+    <span class="text fr" id="lineAreaName"></span>
+</div>
+<div class="row">
+    <span class="fl">巡检情况</span>
+    <textarea title="" id="checkResult"></textarea>
+</div>
+<div class="row">
+    <span class="fl">上传附件</span>
+    <div class="uploadDiv clf">
+    <span>
+      <img src="images/uploadBtn.png" alt="" id="uploadBtn">
+      <input type="file" id="uploadInp">
+    </span>
+    </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script>
+    function getWorksheetDetails() {
+        const user = JSON.parse(getCookie("userdata"));
+        //const params = {"dg_token":"123","power":"0","personNo":"00000"}
+        const params = {
+            "dg_token": user.dg_token,
+            "isDefect": getQueryString("isDefect"),
+            "sheetNo": getQueryString("sheetNo")
+        }
+        $.get(getUrl("/getWorksheetDetails", params), function (res, status) {
+            const data = JSON.parse(res)
+            console.log(data)
+            if (data.status == "0") {
+                alert("请求错误")
+            } else {
+                const d = data.data;
+                $("#personName").text(d.personName);
+                $("#personHelp").text(d.personHelp);
+                $("#startDate").text(d.startDate);
+                $("#endDate").text(d.endDate);
+                $("#lineName").text(d.lineName);
+                $("#task").text(d.task);
+
+                $("#sheetName").text(d.defect.sheetName)
+                $("#lineName2").text(d.defect.lineName)
+                $("#lineAreaName").text(d.defect.lineAreaName)
+                $("#checkResult").text(d.defect.checkResult)
+            }
+        });
+
+    }
+
+    getWorksheetDetails();
+
+    $(function () {
+        var uploadBtn = $('#uploadBtn');
+        var uploadInp = $('#uploadInp');
+        uploadBtn.on('click', function () {
+            uploadInp.click();
+        })
+    })
+</script>
+</body>
+</html>

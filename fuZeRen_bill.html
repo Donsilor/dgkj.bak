@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>负责人巡检</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/fuZeRenXunJan.css">
+  <style>
+    .content > div ul li .text > a.pinJiaBtn{padding: .5rem;}
+  </style>
+</head>
+<body>
+<div class="clf header">
+  <a href="javascript:history.back(-1)" class="fl">工单管理</a>
+</div>
+
+<div class="clf nav" id="nav">
+  <div class="fl current"><span>巡检单</span></div>
+  <div class="fl"><span>已完成</span></div>
+</div>
+<div class="content" id="box">
+  <div>
+    <ul id="list-handout">
+<!--
+      <li>
+        <div class="fl img"><img src="images/photo_1.png" alt=""></div>
+        <div class="fl text">
+          <p>班队：<span>配电一队</span></p>
+          <p>派工时间：<span>2018-05-20 13:00</span></p>
+          <p>派工人员：<span>张孙</span></p>
+          <a href="fuZeRen_workOrder.html" class="fr">巡检</a>
+        </div>
+      </li>
+      <li>
+        <div class="fl img"><img src="images/photo_1.png" alt=""></div>
+        <div class="fl text">
+          <p>班队：<span>配电一队</span></p>
+          <p>派工时间：<span>2018-05-20 13:00</span></p>
+          <p>派工人员：<span>张孙</span></p>
+          <a href="fuZeRen_workOrder.html" class="fr">巡检</a>
+        </div>
+      </li>
+-->
+    </ul>
+  </div>
+  <div style="display:none">
+    <ul id="list-complete">
+<!--
+      <li>
+        <div class="fl img"><img src="images/photo_1.png" alt=""></div>
+        <div class="fl text">
+          <p>班队：<span>配电一队</span></p>
+          <p>派工时间：<span>2018-05-20 13:00</span></p>
+          <p>派工人员：<span>张孙</span></p>
+          <a href="javascript:" class="fr">评价</a>
+        </div>
+      </li>
+      <li>
+        <div class="fl img"><img src="images/photo_1.png" alt=""></div>
+        <div class="fl text">
+          <p>班队：<span>配电一队</span></p>
+          <p>派工时间：<span>2018-05-20 13:00</span></p>
+          <p>派工人员：<span>张孙</span></p>
+          <a href="javascript:" class="fr">评价</a>
+        </div>
+      </li>
+-->
+    </ul>
+  </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script>
+    function getWorksheetList() {
+        const user = JSON.parse(getCookie("userdata"));
+        //userLogin, personNo, personName, dg_token, power
+        //const params = {"dg_token":"123","power":"0","personNo":"00000"}
+        const params = {"dg_token": user.dg_token, "power": user.power, "personNo": user.personNo};
+        $.get(getUrl("/getWorksheetList", params), function (res, status) {
+            const data = JSON.parse(res);
+            const handoutList = data.data.handout;
+            const completeList = data.data.complete;
+
+            const ul = $("#list-handout");
+            for (let i = 0; i < handoutList.length; i++) {
+                const d = handoutList[i];
+
+                ul.append("<li onclick=\"goToWorkOrder(" + d.sheetNo + ")\"><div class=\"fl img\">" +
+                    "<img src=\"images/photo_1.png\">" +
+                    "</div>" +
+                    "<div class=\"fl text\">" +
+                    "<p>班队：<span>" + d.teamName + d.sheetNo + "</span></p><p>派工时间：<span>" + d.date + "</span></p><p>派工人员：<span>" + d.personName + "</span></p>" +
+                    "<a class=\"fr\">巡检</a>" +
+                    "</div></li>")
+            }
+
+            const ul3 = $("#list-complete");
+            for (let i = 0; i < completeList.length; i++) {
+                const d = completeList[i];
+                ul3.append("<li><div class=\"fl img\">" +
+                    "<img src=\"images/photo_1.png\">" +
+                    "</div>" +
+                    "<div class=\"fl text\">" +
+                    "<a href=\"queXianGuanLi_bill_fuZeRen_finish.html?sheetNo="+d.sheetNo+"\"><p>班队：<span>" + d.teamName + d.sheetNo + "</span></p><p>派工时间：<span>" + d.date + "</span></p><p>派工人员：<span>" + d.personName + "</span></p></a>" +
+                    "<a href=\"fuZeRen_pinJia.html?sheetNo="+d.sheetNo+"\" class=\"fr pinJiaBtn\">查看评价</a>" +
+                    "</div></li>")
+            }
+        });
+
+    }
+
+    getWorksheetList();
+
+    function goToWorkOrder(sheetNo) {
+        location.href = "fuZeRen_workOrder.html?sheetNo=" + sheetNo;
+    }
+
+    function goToDetail(sheetNo) {
+        location.href = "peiWangZhuanZe_view.html?sheetNo=" + sheetNo;
+    }
+
+
+  function show(id1, id2) {
+    const nav = document.getElementById(id1);
+    const spans = nav.children;
+    const box = document.getElementById(id2);
+    const lis = box.children;
+    const a = spans[1].className;
+    for (let i = 0; i < spans.length; i++) {
+      spans[i].xuhao = i;
+      spans[i].onclick = function () {
+        for (let i = 0; i < spans.length; i++) {
+          spans[i].className = a;
+          lis[i].style.display = 'none';
+        }
+        this.className = a + ' ' + 'current';
+        lis[this.xuhao].style.display = 'block';
+      }
+    }
+
+
+  }
+
+  show('nav', 'box');
+
+
+</script>
+</body>
+</html>

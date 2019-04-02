@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>评价</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/evaluate.css">
+</head>
+<body>
+<div class="header clf">
+  <a href="javascript:history.back(-1)" class="fl">查看</a>
+</div>
+<div class="row">
+  <span class="fl">负责人：张龙</span>
+  <span class="text fr">处理时间：2018-05-23</span>
+</div>
+<textarea placeholder="" class="evaluate">lkfdjgkldfgkljdfgh</textarea>
+<div class="row">
+  <span class="fl">维修情况</span>
+  <div class="stars" id="star1">
+    <i class="red"></i>
+    <i class="red"></i>
+    <i class="red"></i>
+    <i class="red"></i>
+    <i class="red"></i>
+  </div>
+</div>
+<div class="row">
+  <span class="fl">专业程度</span>
+  <div class="stars" id="star2"><i></i><i></i><i></i><i></i><i></i></div>
+</div>
+<div class="row">
+  <span class="fl">维修速度</span>
+  <div class="stars" id="star3"><i></i><i></i><i></i><i></i><i></i></div>
+</div>
+<!--<button class="submit" onclick="submit()">提交评价</button>-->
+<script src="js/common.js"></script>
+<script src="js/jquery.min.js"></script>
+<script>
+
+  function submit() {
+    var user = JSON.parse(getCookie("userdata"));
+    var oneStar = $("#star1 > i.red").length;
+    var twoStar = $("#star2 > i.red").length;
+    var threeStar = $("#star3 > i.red").length;
+    var detail = $(".evaluate").val();
+    var params = {
+      dg_token: user.dg_token,
+      sheetCategory: '1',
+      sheetNo: getQueryString("sheetNo"),
+      personNo: user.personNo,
+      personName: user.personName,
+      detail: detail,
+      oneStar: "" + oneStar,
+      twoStar: "" + twoStar,
+      threeStar: "" + threeStar
+    };
+
+    $.get(getUrl("/addEvaluate", params), function (res, status) {
+      var data = JSON.parse(res);
+      console.log(data, data.status);
+      if (data.status === '1') {
+        location.href = "index.html"
+      } else if (data.status === '0') {
+        alert(data.message)
+      }
+    });
+  }
+
+  $(function () {
+    var start = $('.stars');
+    var startLength = start.length;
+    var startI = start.children();
+
+//        for (let i = 0; i < startLength; i++) {
+//          start[i].children.on('click', function () {
+//            console.log(start[i]);
+//          })
+//        }
+
+    start.on('click', 'i', function () {
+      var _this = $(this);
+      var _thisIndex = _this.index() + 1;
+      var _thisStart = $(this).parent();
+      var _thisStartI = $(this).parent().children();
+      _thisStartI.removeClass('red');
+      for (var curr = 0; curr < _thisIndex; curr++) {
+        $(_thisStartI[curr]).addClass('red');
+      }
+    })
+
+  })
+
+</script>
+
+</body>
+</html>

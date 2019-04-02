@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>采集</title>
+  <link rel="stylesheet" href="css/mui.min.css">
+  <link rel="stylesheet" href="css/mui.picker.min.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/collect.css">
+</head>
+<body>
+<div class="header clf">
+  <a href="javascript:history.back(-1)" class="fl">采集</a>
+</div>
+<div class="section">
+  <div class="row">
+    <i class="fl icon1"></i>
+    <span class="fl">姓名</span>
+    <span id="selectName-btn" class="text fr"><span class="pleaseSelect">请选择</span></span>
+  </div>
+  <div class="row">
+    <i class="fl icon2"></i>
+    <span class="fl">时间</span>
+    <span data-options='{"type":"datetime"}' id="startTime" class="text fr"><span id="startTimeResult"><span class="pleaseSelect">请选择</span></span></span>
+  </div>
+  <div class="row">
+    <i class="fl icon4"></i>
+    <span class="fl">线路名称</span>
+    <span id="selectCircuitBtn" class="text fr"><span class="pleaseSelect">请选择</span></span>
+  </div>
+  <div class="row">
+    <i class="fl icon5"></i>
+    <span class="fl">线段名称</span>
+    <a id="selectSegmentBtn" href="javascript:" class=" fr"><span class="pleaseSelect">请选择</span></a>
+  </div>
+</div>
+<div class="btn">
+  <a href="javascript:">开始采集</a>
+  <a href="javascript:">结束采集</a>
+</div>
+
+<div class="layer"></div>
+<div class="popup" id="selectName">
+  <div class="topBar">选择姓名</div>
+  <a href="javascript:" class="closeBtn"></a>
+  <div class="mainDiv">
+    <a href="javascript:" onclick="onSelectName('关羽')">关羽</a>
+    <a href="javascript:" onclick="onSelectName('张飞')">张飞</a>
+    <a href="javascript:" onclick="onSelectName('啦啦啦')">啦啦啦</a>
+  </div>
+</div>
+<div class="popup" id="selectCircuit">
+  <div class="topBar">选择线路名称</div>
+  <a href="javascript:" class="closeBtn"></a>
+  <div class="mainDiv">
+    <a href="javascript:" onclick="onSelectCircuit('街道153线')">街道153线</a>
+    <a href="javascript:" onclick="onSelectCircuit('采石场153线')">采石场153线</a>
+    <a href="javascript:" onclick="onSelectCircuit('街道158线')">街道158线</a>
+  </div>
+</div>
+<div class="popup" id="selectSegment">
+  <div class="topBar">选择线段名称</div>
+  <a href="javascript:" class="closeBtn"></a>
+  <div class="mainDiv">
+    <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="街道153线主干#01-#07">街道153线主干#01-#07
+    </div>
+    <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="街道153线主干#36 街道支线#01-#16">街道153线主干#36
+      街道支线#01-#16
+    </div>
+    <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="街道支线#01 牌坊分支线#01-#20">街道支线#01
+      牌坊分支线#01-#20
+    </div>
+    <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="街道153线主干#46 南苑支线#01-#22">街道153线主干#46
+      南苑支线#01-#22
+    </div>
+    <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="南苑支线#01 高铁东苑分支线#01-#10">南苑支线#01
+      高铁东苑分支线#01-#10
+    </div>
+    <div><input type="checkbox" name="segment" onchange="onSelectSegment()" value="街道153线主干#61 #61支线#01-#43">街道153线主干#61
+      #61支线#01-#43
+    </div>
+  </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/mui.picker.min.js"></script>
+<script>
+
+  (function (mui) {
+
+    mui.init();
+
+    const startTime = $('#startTime');
+    const startTimeResult = $('#startTimeResult')[0];
+    const endTime = $('#endTime');
+    const endTimeResult = $('#endTimeResult')[0];
+
+    /*选择日期函数开始执行*/
+    startTime.each(function (i, btn) {
+      btn.addEventListener('tap', function () {
+        const _self = this;
+        if (_self.picker) {
+          _self.picker.show(function (rs) {
+            startTimeResult.innerText = rs.text;
+            _self.picker.dispose();
+            _self.picker = null;
+          });
+        } else {
+          const optionsJson = this.getAttribute('data-options') || '{}';
+          const options = JSON.parse(optionsJson);
+          const id = this.getAttribute('id');
+          _self.picker = new mui.DtPicker(options);
+          _self.picker.show(function (rs) {
+            startTimeResult.innerText = rs.text;
+            _self.picker.dispose();
+            _self.picker = null;
+          });
+        }
+
+      }, false);
+    });
+
+
+  })(mui);
+
+  $(function () {
+
+
+    const layer = $('.layer');
+    const closeBtn = $('.popup .closeBtn');
+    const selectName = $('#selectName');
+    const selectNameBtn = $('#selectName-btn');
+    const selectCircuit = $('#selectCircuit');
+    const selectCircuitBtn = $('#selectCircuitBtn');
+
+    closeBtn.on('click', function () {
+      layer.hide();
+      $(this).parent('.popup').hide();
+    });
+
+    selectNameBtn.on('click', function () {
+      selectName.show();
+      layer.show();
+    });
+
+    selectCircuitBtn.on('click', function () {
+      selectCircuit.show();
+      layer.show();
+    });
+
+
+    const selectSegment = $('#selectSegment');
+    const selectSegmentBtn = $('#selectSegmentBtn');
+    selectSegmentBtn.on('click', function () {
+      layer.show();
+      selectSegment.show();
+    });
+
+  })
+
+</script>
+</body>
+</html>

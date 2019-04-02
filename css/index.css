@@ -1,0 +1,35 @@
+
+body{padding:0 0 3.3rem;}
+
+.ind_banner img{display: block;width: 100%;}
+
+
+.titleBar{background-color: #f2f2f2;color: #333;border-left: .2rem solid #00BAFE;font:bold 1rem/2.5 '';padding-left: 2.5%;}
+
+.listsDiv{padding: 1rem 0;}
+.listsDiv li{float: left;width: 25%;}
+.listsDiv li a{display: block;text-align: center;}
+.listsDiv li a .icon{display: block;width: 3rem;height: 3rem;border-radius: 50%;margin: auto;}
+.listsDiv li a .icon_1{background: url("../images/index_icon_1.png") no-repeat center/contain;}
+.listsDiv li a .icon_2{background: url("../images/index_icon_2.png") no-repeat center/contain;}
+.listsDiv li a .icon_3{background: url("../images/index_icon_3.png") no-repeat center/contain;}
+.listsDiv li a .icon_4{background: url("../images/index_icon_4.png") no-repeat center/contain;}
+.listsDiv li a .icon_5{background: url("../images/index_icon_5.png") no-repeat center/contain;}
+.listsDiv li a .icon_6{background: url("../images/index_icon_6.png") no-repeat center/contain;}
+.listsDiv li a span{font: 1rem/2 '';color: #333;}
+
+
+.recentOrder{border-top: .3rem solid #efefef;}
+.recentOrder > .title{font:bold 1rem/2.5 '';padding: 0 3.5%;border-bottom: 1px solid #dbdbdb;}
+.recentOrder .item{display: block;padding: .6rem 2.5%;font: 1rem/1.8 '';border-bottom: 1px solid #dbdbdb;background: url("../images/r_arrow.png") no-repeat 97%/auto 1.2rem;}
+.recentOrder .item:before,
+.recentOrder .item:after{content:"";display:block;height:0;clear:both;visibility:hidden;}
+.recentOrder .item .icon{float: left;width: 1.8rem;margin: .5rem .5rem .5rem 0;}
+.recentOrder .item .icon img{display: block;width: 100%;}
+.recentOrder .item .title{color: #333;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;}
+.recentOrder .item .time{color: #555;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;}
+
+
+
+
+

@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>执行巡检</title>
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/mui.picker.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/fuZeRen_execute.css">
+</head>
+<body>
+<div class="clf header">
+    <a href="javascript:history.back(-1)" class="fl">查看</a>
+</div>
+<div class="section">
+    <div class="row">
+        <span class="fl">线路名称</span>
+        <span id="selectCircuitBtn" class="text fr">街道153线</span>
+    </div>
+    <div class="row">
+        <span class="fl">开始时间</span>
+        <span data-options='{"type":"time"}' id="startTime" class="text fr"><span
+                id="startTimeResult">9:00</span></span>
+    </div>
+    <div class="row">
+        <span class="fl">结束时间</span>
+        <span data-options='{"type":"time"}' id="endTime" class="text fr"><span id="endTimeResult">18:00</span></span>
+    </div>
+</div>
+<div>
+    <div class="row">
+        <span class="fl">线段名称</span>
+        <span id="selectSegmentBtn" class="text fr">街道153线主干#01-#70、主干</span>
+    </div>
+    <div class="row borderNot">
+        <div class="clf">
+            <span class="fl">巡检情况</span>
+            <div id="condition" class="text fr">
+                <div>发现问题</div>
+            </div>
+        </div>
+        <div class="textarea">
+            <textarea title="" id="detailResult"></textarea>
+            <a href="javascript:" class="voice"></a>
+        </div>
+    </div>
+    <div id="btnDiv" class="btn">
+        <button onclick="checkWorksheet()">评价</button>
+    </div>
+</div>
+
+<div class="layer"></div>
+<div class="popup" id="selectCircuit">
+    <div class="topBar">选择线路名称</div>
+    <a href="javascript:" class="closeBtn"></a>
+    <div class="mainDiv">
+        <a href="javascript:" onclick="onSelectCircuit('街道153线')">街道153线</a>
+        <a href="javascript:" onclick="onSelectCircuit('采石场153线')">采石场153线</a>
+        <a href="javascript:" onclick="onSelectCircuit('街道158线')">街道158线</a>
+    </div>
+</div>
+<div class="popup" id="selectSegment">
+    <div class="topBar">选择线段名称</div>
+    <a href="javascript:" class="closeBtn"></a>
+    <div class="mainDiv">
+        <div><input type="checkbox" title="segment" onchange="onSelectSegment()" value="街道153线主干#01-#07">街道153线主干#01-#07
+        </div>
+        <div><input type="checkbox" title="segment" onchange="onSelectSegment()" value="街道153线主干#36 街道支线#01-#16">街道153线主干#36&emsp;街道支线#01-#16
+        </div>
+        <div><input type="checkbox" title="segment" onchange="onSelectSegment()" value="街道支线#01 牌坊分支线#01-#20">街道支线#01&emsp;牌坊分支线#01-#20
+        </div>
+        <div><input type="checkbox" title="segment" onchange="onSelectSegment()" value="街道153线主干#46 南苑支线#01-#22">街道153线主干#46&emsp;南苑支线#01-#22
+        </div>
+        <div><input type="checkbox" title="segment" onchange="onSelectSegment()" value="南苑支线#01 高铁东苑分支线#01-#10">南苑支线#01&emsp;高铁东苑分支线#01-#10
+        </div>
+        <div><input type="checkbox" title="segment" onchange="onSelectSegment()" value="街道153线主干#61 #61支线#01-#43">街道153线主干#61&emsp;#61支线#01-#43
+        </div>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/mui.picker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script>
+
+    function closePopup() {
+        $('.layer').hide();
+    }
+
+
+    function onSelectCircuit(lineName) {
+        $("#selectCircuitBtn").text(lineName);
+        $('#selectCircuit').hide();
+        closePopup();
+    }
+
+    function onSelectSegment() {
+        var ls = $("#selectSegment input:checked");
+        var lineAreaName = [];
+        for (var i = 0; i < ls.length; i++) {
+            lineAreaName.push(ls[i].value)
+        }
+
+        $("#selectSegmentBtn").text(lineAreaName.join("， "));
+        $('#selectSegment').hide();
+        closePopup();
+    }
+
+    function checkWorksheet() {
+        const user = JSON.parse(getCookie("userdata"));
+        var params = {
+            "dg_token": user.dg_token,
+            "power": user.power,
+            "sheetNo": getQueryString("sheetNo"),
+            "pSheetNo": "",
+            "detailResult": $("#detailResult").text(),
+        };
+
+        $.get(getUrl("/checkWorksheet", params), function (res, status) {
+            var data = JSON.parse(res);
+            if (data.status === "0") {
+                alert("请求错误")
+            } else {
+                alert("成功")
+            }
+        });
+    }
+
+
+    $(function () {
+
+        const layer = $('.layer');
+        const closeBtn = $('.closeBtn');
+
+        closeBtn.on('click', function () {
+            layer.hide();
+            $(this).parent('.popup').hide();
+        });
+
+        const selectCircuit = $('#selectCircuit');
+        const selectCircuitBtn = $('#selectCircuitBtn');
+        selectCircuitBtn.on('click', function () {
+            layer.show();
+            selectCircuit.show();
+        });
+
+        const selectSegment = $('#selectSegment');
+        const selectSegmentBtn = $('#selectSegmentBtn');
+        selectSegmentBtn.on('click', function () {
+            layer.show();
+            selectSegment.show();
+        });
+
+
+        //选项卡切换
+        function Tab(option, active, tabObj, siblingObj) {
+            const $bp = $(option);
+            $bp.click(function () {
+                $(this).addClass(active).siblings().removeClass(active);
+                const index = $bp.index(this);
+                $(tabObj).eq(index).show().siblings(siblingObj).hide();
+            });
+        }
+
+        Tab('#condition div', 'current', '#btnDiv button', 'button');
+
+    });
+
+    (function (mui) {
+
+        mui.init();
+
+        const startTime = $('#startTime');
+        const startTimeResult = $('#startTimeResult')[0];
+        const endTime = $('#endTime');
+        const endTimeResult = $('#endTimeResult')[0];
+
+        /*选择日期函数开始执行*/
+        startTime.each(function (i, btn) {
+            btn.addEventListener('tap', function () {
+                const _self = this;
+                if (_self.picker) {
+                    _self.picker.show(function (rs) {
+                        startTimeResult.innerText = rs.text;
+                        _self.picker.dispose();
+                        _self.picker = null;
+                    });
+                } else {
+                    const optionsJson = this.getAttribute('data-options') || '{}';
+                    const options = JSON.parse(optionsJson);
+                    const id = this.getAttribute('id');
+                    _self.picker = new mui.DtPicker(options);
+                    _self.picker.show(function (rs) {
+                        startTimeResult.innerText = rs.text;
+                        _self.picker.dispose();
+                        _self.picker = null;
+                    });
+                }
+
+            }, false);
+        });
+
+        /*选择时间函数开始执行*/
+        endTime.each(function (i, btn) {
+            btn.addEventListener('tap', function () {
+                const _self = this;
+                if (_self.picker) {
+                    _self.picker.show(function (rs) {
+                        endTimeResult.innerText = rs.text;
+                        _self.picker.dispose();
+                        _self.picker = null;
+                    });
+                } else {
+                    const optionsJson = this.getAttribute('data-options') || '{}';
+                    const options = JSON.parse(optionsJson);
+                    const id = this.getAttribute('id');
+                    _self.picker = new mui.DtPicker(options);
+                    _self.picker.show(function (rs) {
+                        endTimeResult.innerText = rs.text;
+                        _self.picker.dispose();
+                        _self.picker = null;
+                    });
+                }
+
+            }, false);
+        });
+
+    })(mui);
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>执行巡检</title>
+  <link rel="stylesheet" href="css/mui.min.css">
+  <link rel="stylesheet" href="css/mui.picker.min.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/fuZeRen_execute.css">
+</head>
+<body>
+<div class="clf header">
+  <a href="javascript:history.back(-1)" class="fl">查看</a>
+</div>
+<div class="row">
+  <i class="fl icon8"></i>
+  <span class="fl">单位</span>
+  <span class="text fr" id="unitName">滁州城郊县供电公司</span>
+</div>
+<div class="row">
+  <i class="fl icon9"></i>
+  <span class="fl">编号</span>
+  <span class="text fr" id="sheetNo">2018057565</span>
+</div>
+<div class="row">
+  <i class="fl icon10"></i>
+  <span class="fl">班组</span>
+  <span class="text fr" id="teamName">配电一队</span>
+</div>
+<div class="row">
+  <i class="fl icon11"></i>
+  <span class="fl">工单类型</span>
+  <span class="text fr" id="sheetName"></span>
+</div>
+<div class="row">
+  <i class="fl icon3"></i>
+  <span class="fl">计划开始时间</span>
+  <span class="text fr" id="startDate">2018-05-08 09:00</span>
+</div>
+<div class="row">
+  <i class="fl placeholder"></i>
+  <span class="fl">计划结束时间</span>
+  <span class="text fr" id="endDate">至2018-05-18 18:00</span>
+</div>
+<div class="row">
+  <i class="fl icon1"></i>
+  <span class="fl">所派人员</span>
+  <span id="assignedPersonnel" class="fr">张三</span>
+</div>
+<div class="row">
+  <i class="fl icon2"></i>
+  <span class="fl">协助人员</span>
+  <span id="assistPersonnel" class="fr">李四</span>
+</div>
+<div class="row">
+  <i class="fl icon4"></i>
+  <span class="fl">线路名称</span>
+  <span class="text fr" id="lineName">街道153线</span>
+</div>
+<div class="row">
+  <i class="fl icon5"></i>
+  <span class="fl">线段名称</span>
+  <a href="javascript:" class=" fr" id="lineAreaName"></a>
+</div>
+<div class="row">
+  <i class="fl icon6"></i>
+  <span class="fl">任务</span>
+  <div class="textarea">
+    <textarea title="" id="task">任务描述</textarea>
+  </div>
+</div>
+<div class="titelBar"><span>结果</span></div>
+<div>
+  <div class="row borderNot">
+    <div class="clf">
+      <span class="fl">巡检情况</span>
+      <div id="condition" class="text fr">
+        <div>发现问题</div>
+      </div>
+    </div>
+    <div class="textarea">
+      <textarea title=""></textarea>
+      <!--<a href="javascript:" class="voice"></a>-->
+    </div>
+  </div>
+  <div class="btn">
+    <button>查看评价</button>
+  </div>
+</div>
+
+<div class="layer"></div>
+<div class="popup" id="selectCircuit">
+  <div class="topBar">选择线路名称</div>
+  <a href="javascript:" class="closeBtn"></a>
+  <div class="mainDiv">
+    <a href="javascript:">街道153线</a>
+    <a href="javascript:">采石场153线</a>
+    <a href="javascript:">街道158线</a>
+  </div>
+</div>
+<div class="popup" id="selectSegment">
+  <div class="topBar">选择线段名称</div>
+  <a href="javascript:" class="closeBtn"></a>
+  <div class="mainDiv">
+    <div><input type="checkbox" title="segment">街道153线主干#01-#07</div>
+    <div><input type="checkbox" title="segment">街道153线主干#36&emsp;街道支线#01-#16</div>
+    <div><input type="checkbox" title="segment">街道支线#01&emsp;牌坊分支线#01-#20</div>
+    <div><input type="checkbox" title="segment">街道153线主干#46&emsp;南苑支线#01-#22</div>
+    <div><input type="checkbox" title="segment">南苑支线#01&emsp;高铁东苑分支线#01-#10</div>
+    <div><input type="checkbox" title="segment">街道153线主干#61&emsp;#61支线#01-#43</div>
+  </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/mui.picker.min.js"></script>
+<script>
+
+  $(function () {
+
+    var layer = $('.layer');
+    var closeBtn = $('.closeBtn');
+
+    closeBtn.on('click', function () {
+      layer.hide();
+      $(this).parent('.popup').hide();
+    });
+
+    var selectCircuit = $('#selectCircuit');
+    var selectCircuitBtn = $('#selectCircuitBtn');
+    selectCircuitBtn.on('click', function () {
+      layer.show();
+      selectCircuit.show();
+    });
+
+    var selectSegment = $('#selectSegment');
+    var selectSegmentBtn = $('#selectSegmentBtn');
+    selectSegmentBtn.on('click', function () {
+      layer.show();
+      selectSegment.show();
+    });
+
+
+  });
+
+  (function (mui) {
+
+    mui.init();
+
+    var startTime = $('#startTime');
+    var startTimeResult = $('#startTimeResult')[0];
+    var endTime = $('#endTime');
+    var endTimeResult = $('#endTimeResult')[0];
+
+    /*选择日期函数开始执行*/
+    startTime.each(function (i, btn) {
+      btn.addEventListener('tap', function () {
+        var _self = this;
+        if (_self.picker) {
+          _self.picker.show(function (rs) {
+            startTimeResult.innerText = rs.text;
+            _self.picker.dispose();
+            _self.picker = null;
+          });
+        } else {
+          var optionsJson = this.getAttribute('data-options') || '{}';
+          var options = JSON.parse(optionsJson);
+          var id = this.getAttribute('id');
+          _self.picker = new mui.DtPicker(options);
+          _self.picker.show(function (rs) {
+            startTimeResult.innerText = rs.text;
+            _self.picker.dispose();
+            _self.picker = null;
+          });
+        }
+
+      }, false);
+    });
+
+    /*选择时间函数开始执行*/
+    endTime.each(function (i, btn) {
+      btn.addEventListener('tap', function () {
+        var _self = this;
+        if (_self.picker) {
+          _self.picker.show(function (rs) {
+            endTimeResult.innerText = rs.text;
+            _self.picker.dispose();
+            _self.picker = null;
+          });
+        } else {
+          var optionsJson = this.getAttribute('data-options') || '{}';
+          var options = JSON.parse(optionsJson);
+          var id = this.getAttribute('id');
+          _self.picker = new mui.DtPicker(options);
+          _self.picker.show(function (rs) {
+            endTimeResult.innerText = rs.text;
+            _self.picker.dispose();
+            _self.picker = null;
+          });
+        }
+
+      }, false);
+    });
+
+  })(mui);
+
+
+</script>
+</body>
+</html>
